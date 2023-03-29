@@ -12,7 +12,6 @@ public class Wish {
         this.description = description;
         this.url = url;
         this.price = price;
-
     }
 
     public String getName() {

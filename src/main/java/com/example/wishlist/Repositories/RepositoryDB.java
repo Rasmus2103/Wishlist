@@ -32,6 +32,7 @@ public class RepositoryDB implements IRepositoryDB {
         try {
             con = DriverManager.getConnection(db_url,uid,pwd);
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
         return con;
@@ -40,37 +41,56 @@ public class RepositoryDB implements IRepositoryDB {
     public List<User> getUsers() {
         List<User> users = new ArrayList<>();
         try {
-            SQL = "SELECT name FROM user";
+            SQL = "SELECT name, username, password FROM user";
             stmt = connection().createStatement();
             rs = stmt.executeQuery(SQL);
             while(rs.next()) {
                 String name = rs.getString("name");
-                users.add(new User(name));
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                users.add(new User(name, username, password));
             }
             return users;
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
-
-    public List<WishlistDTO> Wishes(int id) {
+    public List<WishlistDTO> wishes (String username) {
         List<WishlistDTO> wishListList = new ArrayList<>();
         try {
-            SQL = "SELECT user.name, wishlist.wishlistname FROM wishlist" +
-                    "JOIN userwishlist ON user.userid = userwishlist.userid" +
-                    "WHERE userid = ?";
+            SQL = "SELECT wishlistname, wishname, description, url, price" +
+            "FROM user u" +
+            "JOIN userwishlist uw ON u.userid = uw.userid" +
+            "JOIN wishlist wl ON wl.wishlistid = uw.wishlistid" +
+            "JOIN wishlistwish ww ON ww.wishlistid = wl.wishlistid" +
+            "JOIN wish w ON w.wishid = ww.wishid" +
+            "WHERE u.username = ?";
             ps = connection().prepareStatement(SQL);
-            ps.setInt(1, id);
+            ps.setString(1, username);
             rs = ps.executeQuery();
-            String wishName = "";
-            List<Wish> currentWishlist = null;
+            String currentWishlist = "";
+            WishlistDTO wishlistDTO;
+            List<Wish> wishes = null;
             while (rs.next()) {
-                wishName = rs.getString("name");
-                currentWishlist.add(new Wish());
+            String wishlistname = rs.getString("wishlistname");
+            String wishname = rs.getString("wishname");
+            String description = rs.getString("description");
+            String url = rs.getString("url");
+            String price = rs.getString("price");
+            if (wishlistname.equals(currentWishlist)){
+                wishes.add(new Wish(wishname, description, url, price));
+            } else {
+                wishes = new ArrayList<>(List.of(new Wish(wishname, description, url, price)));
+                wishlistDTO = new WishlistDTO(wishlistname, wishes);
+                wishListList.add(wishlistDTO);
+                currentWishlist = wishlistname;
+            }
             }
             return wishListList;
         } catch (SQLException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }

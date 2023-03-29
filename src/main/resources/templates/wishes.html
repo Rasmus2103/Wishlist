@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="UTF-8">
+    <title>wishes</title>
+</head>
+<body>
+    <h1>Wishes:</h1>
+    <h1 th:text="${wishes.name}">name</h1>
+    <table>
+        <tr th:each="wishes: ${wishes}">
+            <td th:text="${wishes.wishes}"></td>
+        </tr>
+        <a href="/wishlist">back</a>
+    </table>
+</body>
+</html>

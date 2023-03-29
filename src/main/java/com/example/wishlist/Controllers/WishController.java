@@ -1,5 +1,6 @@
 package com.example.wishlist.Controllers;
 
+import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Models.User;
 import com.example.wishlist.Repositories.IRepositoryDB;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -25,5 +27,12 @@ public class WishController {
         List<User> users = repositoryDB.getUsers();
         model.addAttribute("user", users);
         return "index";
+    }
+
+    @GetMapping("wishes/{username}")
+    public String getWishes(@PathVariable("username") String username, Model model) {
+        List<WishlistDTO> wishes = repositoryDB.wishes(username);
+        model.addAttribute("wishes", wishes);
+        return "wishes";
     }
 }
