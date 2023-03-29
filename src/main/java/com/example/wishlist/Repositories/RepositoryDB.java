@@ -60,12 +60,12 @@ public class RepositoryDB implements IRepositoryDB {
     public List<WishlistDTO> wishes (String username) {
         List<WishlistDTO> wishListList = new ArrayList<>();
         try {
-            SQL = "SELECT wishlistname, wishname, description, url, price" +
-            "FROM user u" +
-            "JOIN userwishlist uw ON u.userid = uw.userid" +
-            "JOIN wishlist wl ON wl.wishlistid = uw.wishlistid" +
-            "JOIN wishlistwish ww ON ww.wishlistid = wl.wishlistid" +
-            "JOIN wish w ON w.wishid = ww.wishid" +
+            SQL = "SELECT wishlistname, wishname, description, url, price " +
+            "FROM user u " +
+            "JOIN userwishlist uw ON u.userid = uw.userid " +
+            "JOIN wishlist wl ON wl.wishlistid = uw.wishlistid " +
+            "JOIN wishlistwish ww ON ww.wishlistid = wl.wishlistid " +
+            "JOIN wish w ON w.wishid = ww.wishid " +
             "WHERE u.username = ?";
             ps = connection().prepareStatement(SQL);
             ps.setString(1, username);
