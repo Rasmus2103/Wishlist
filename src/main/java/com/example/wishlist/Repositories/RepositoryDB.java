@@ -1,5 +1,8 @@
 package com.example.wishlist.Repositories;
 
+import com.example.wishlist.DTO.WishlistDTO;
+import com.example.wishlist.Models.User;
+import com.example.wishlist.Models.Wish;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -34,22 +37,220 @@ public class RepositoryDB implements IRepositoryDB {
         return con;
     }
 
-    public List<SuperHero> Heroes() {
-        List<SuperHero> herolist = new ArrayList<>();
-        SuperHero hero;
+    public List<User> getUsers() {
+        List<User> users = new ArrayList<>();
         try {
-            SQL = "SELECT realname, heroname, creationyear, id FROM superhero";
+            SQL = "SELECT name FROM user";
             stmt = connection().createStatement();
             rs = stmt.executeQuery(SQL);
-            while (rs.next()) {
-                hero = new SuperHero(rs.getString("realname"), rs.getString("heroname"), rs.getInt("creationyear"), rs.getInt("id"));
-                herolist.add(hero);
+            while(rs.next()) {
+                String name = rs.getString("name");
+                users.add(new User(name));
             }
-            return herolist;
+            return users;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+
+
+    /*public List<WishlistDTO> Wishes() {
+        List<WishlistDTO> wishListList = new ArrayList<>();
+        try {
+            SQL = "SELECT * FROM wishlist";
+            stmt = connection().createStatement();
+            rs = stmt.executeQuery(SQL);
+            while (rs.next()) {
+                String name = rs.getString("wishlistname");
+                wishListList.add(new WishlistDTO(name, null));
+            }
+            return wishListList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public WishlistDTO getWishListById(int id) {
+        WishlistDTO wishlistDTO = null;
+        try {
+            SQL = "SELECT wishlistname FROM wishlist " +
+                    "JOIN wishlistwish ON Wishlist.wishlistid = wishlistwish.wishlistid" +
+                    "JOIN Wish ON wishlistwish.wishid = Wish.wishid" +
+                    "WHERE ";
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }*/
+
+
+    //CREATE Superhero
+    /*public void addSuperhero(SuperHeroForm form) {
+        try {
+            // ID's
+            int cityId = 0;
+            int heroId = 0;
+            List<Integer> powerIDs = new ArrayList<>();
+
+            // find city_id
+            String SQL1 = "select id from city where cityname = ?";
+            PreparedStatement pstmt = connection().prepareStatement(SQL1);
+            pstmt.setString(1, form.getCity());
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                cityId = rs.getInt("id");
+            }
+
+            // insert row in superhero table
+            String SQL2 = "insert into superhero (heroname, realname, creationyear, cityid) " +
+                    "values(?, ?, ?, ?)";
+            pstmt = connection().prepareStatement(SQL2, Statement.RETURN_GENERATED_KEYS); // return autoincremented key
+            pstmt.setString(1, form.getHeroName());
+            pstmt.setString(2, form.getRealName());
+            pstmt.setInt(3, form.getCreationYear());
+            pstmt.setInt(4, cityId);
+            int rows = pstmt.executeUpdate();
+            rs = pstmt.getGeneratedKeys();
+            if (rs.next()) {
+                heroId = rs.getInt(1);
+            }
+
+
+            // find power_ids
+            String SQL3 = "select id from superpower where powername = ?;";
+            pstmt = connection().prepareStatement(SQL3);
+
+            for (String power : form.getPowerList()) {
+                pstmt.setString(1, power);
+                rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    powerIDs.add(rs.getInt("id"));
+                }
+            }
+
+            // insert entries in superhero_powers join table
+            String SQL4 = "insert into superheropower values (?,?);";
+            pstmt = connection().prepareStatement(SQL4);
+
+            for (int i = 0; i < powerIDs.size(); i++) {
+                pstmt.setInt(1, heroId);
+                pstmt.setInt(2, powerIDs.get(i));
+                rows = pstmt.executeUpdate();
+            }
+
+        } catch(SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //UPDATE Superhero
+    public void updateHero(int id, SuperHeroForm form) {
+        try {
+            String cityQuery = "SELECT id FROM city WHERE cityname = ?";
+            PreparedStatement cityPs = connect().prepareStatement(cityQuery);
+            cityPs.setString(1, form.getCity());
+            ResultSet cityRs = cityPs.executeQuery();
+            int cityId = 0;
+            if (cityRs.next()) {
+                cityId = cityRs.getInt("id");
+            }
+            cityRs.close();
+            cityPs.close();
+
+            // Then, update the superhero using the fetched cityid
+            String SQL = "UPDATE superhero SET heroname = ?, realname = ?, creationyear = ?, cityid = ? WHERE id = ?";
+            PreparedStatement ps = connect().prepareStatement(SQL);
+            ps.setString(1, form.getHeroName());
+            ps.setString(2, form.getRealName());
+            ps.setInt(3, form.getCreationYear());
+            ps.setInt(4, cityId);
+            ps.setInt(5, id);
+            ps.executeUpdate();
+        } catch(SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        deleteSuperheroPowers(id);
+        addSuperheroPowers(id, form.getPowerList());
+    }
+
+    public void deleteSuperheroPowers(int heroId) {
+        try {
+            SQL = "DELETE FROM superheropower WHERE superheroid = ?";
+            ps = connect().prepareStatement(SQL);
+            ps.setInt(1, heroId);
+            ps.executeUpdate();
+            ps.close();
+            connect().close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void addSuperheroPowers(int heroId, List<String> powers) {
+        PreparedStatement localPs;
+        try {
+            String SQL = "INSERT INTO superheropower (superheroid, superpowerid) VALUES (?, ?)";
+            localPs = connect().prepareStatement(SQL);
+
+            for (String powerName : powers) {
+                int powerId = getPowerId(powerName);
+                localPs.setInt(1, heroId);
+                localPs.setInt(2, powerId);
+                localPs.addBatch();
+            }
+
+            localPs.executeBatch();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getPowerId(String powerName) {
+        int powerId = 0;
+        String SQL = "SELECT id FROM superpower WHERE powername = ?";
+        try (Connection connection = connect();
+             PreparedStatement ps = connection.prepareStatement(SQL)) {
+            ps.setString(1, powerName);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    powerId = rs.getInt("id");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return powerId;
+    }
+
+    //DELETE Superhero
+    public void deleteHero(int heroId) {
+        try {
+            SQL = "SELECT id FROM superhero WHERE id = ?";
+            ps = connect().prepareStatement(SQL);
+            ps.setInt(1, heroId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                heroId = rs.getInt("id");
+            }
+
+            SQL = "DELETE FROM superheropower WHERE superheroid = ?";
+            ps = connect().prepareStatement(SQL);
+            ps.setInt(1, heroId);
+            ps.executeUpdate();
+
+            SQL = "DELETE FROM superhero WHERE id = ?";
+            ps = connect().prepareStatement(SQL);
+            ps.setInt(1, heroId);
+            ps.executeUpdate();
+
+        } catch(SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+*/
+
 
 
 

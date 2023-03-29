@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Wishlist</title>
 </head>
 <body>
-
+ <tr th:each="users: ${user}">
+    <td th:text="${users.name}"></td>
+ </tr>
 </body>
 </html>

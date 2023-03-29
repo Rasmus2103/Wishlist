@@ -6,9 +6,9 @@ public class Wish {
     private String description;
     private String url;
     private String price;
-    private String image;
+        private String image;
 
-    public Wish(String name, String description, String url, String price, String image) {
+    public Wish(String name, String description, String url, String price) {
         this.name = name;
         this.description = description;
         this.url = url;
