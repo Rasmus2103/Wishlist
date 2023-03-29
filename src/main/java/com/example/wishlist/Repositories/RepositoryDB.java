@@ -54,16 +54,20 @@ public class RepositoryDB implements IRepositoryDB {
     }
 
 
-
-    /*public List<WishlistDTO> Wishes() {
+    public List<WishlistDTO> Wishes(int id) {
         List<WishlistDTO> wishListList = new ArrayList<>();
         try {
-            SQL = "SELECT * FROM wishlist";
-            stmt = connection().createStatement();
-            rs = stmt.executeQuery(SQL);
+            SQL = "SELECT user.name, wishlist.wishlistname FROM wishlist" +
+                    "JOIN userwishlist ON user.userid = userwishlist.userid" +
+                    "WHERE userid = ?";
+            ps = connection().prepareStatement(SQL);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            String wishName = "";
+            List<Wish> currentWishlist = null;
             while (rs.next()) {
-                String name = rs.getString("wishlistname");
-                wishListList.add(new WishlistDTO(name, null));
+                wishName = rs.getString("name");
+                currentWishlist.add(new Wish());
             }
             return wishListList;
         } catch (SQLException e) {
@@ -71,7 +75,7 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
-    public WishlistDTO getWishListById(int id) {
+    /*public WishlistDTO getWishListById(int id) {
         WishlistDTO wishlistDTO = null;
         try {
             SQL = "SELECT wishlistname FROM wishlist " +
