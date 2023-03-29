@@ -29,4 +29,12 @@ public class WishlistDTO {
         this.wishes = wishes;
     }
 
+    @Override
+    public String toString() {
+        return "WishlistDTO{" +
+                "name='" + name + '\'' +
+                ", wishes=" + wishes +
+                '}';
+    }
+
 }

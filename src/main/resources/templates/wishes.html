@@ -6,7 +6,6 @@
 </head>
 <body>
     <h1>Wishes:</h1>
-    <h1 th:text="${wishes.name}">name</h1>
     <table>
         <tr th:each="wishes: ${wishes}">
             <td th:text="${wishes.wishes}"></td>

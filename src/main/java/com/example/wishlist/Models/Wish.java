@@ -46,4 +46,14 @@ public class Wish {
         this.price = price;
     }
 
+    @Override
+    public String toString() {
+        return "Wish{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", url='" + url + '\'' +
+                ", price='" + price + '\'' +
+                '}';
+    }
+
 }
