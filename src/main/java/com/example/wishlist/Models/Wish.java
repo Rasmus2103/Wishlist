@@ -6,14 +6,13 @@ public class Wish {
     private String description;
     private String url;
     private String price;
-        private String image;
 
     public Wish(String name, String description, String url, String price) {
         this.name = name;
         this.description = description;
         this.url = url;
         this.price = price;
-        this.image = image;
+
     }
 
     public String getName() {
@@ -46,14 +45,6 @@ public class Wish {
 
     public void setPrice(String price) {
         this.price = price;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
 }
