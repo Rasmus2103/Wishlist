@@ -8,10 +8,10 @@
 </head>
 <body>
     <h1>Wishes:</h1>
+    <h1 th:text="${userDTO.name}">name</h1>
     <table>
-        <tr th:each="wishes: ${wishes}">
-            <td th:text="${wishes.name}"></td>
-            <td th:text="${wishes.wishes}"></td>
+        <tr th:each="userDTO: ${userDTO}">
+            <td th:text="${userDTO.wishlistdto}"></td>
         </tr>
         <a href="/wishlist">back</a>
     </table>

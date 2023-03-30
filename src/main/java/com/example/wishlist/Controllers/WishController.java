@@ -1,5 +1,6 @@
 package com.example.wishlist.Controllers;
 
+import com.example.wishlist.DTO.UserDTO;
 import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Models.User;
 import com.example.wishlist.Repositories.IRepositoryDB;
@@ -29,8 +30,8 @@ public class WishController {
 
     @GetMapping("wishes/{username}")
     public String getWishes(@PathVariable("username") String username, Model model) {
-        List<WishlistDTO> wishes = repositoryDB.wishes(username);
-        model.addAttribute("wishes", wishes);
+        UserDTO userDTO = repositoryDB.userDTO(username);
+        model.addAttribute("userDTO", userDTO);
         return "wishes";
     }
 
