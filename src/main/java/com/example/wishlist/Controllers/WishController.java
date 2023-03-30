@@ -35,12 +35,14 @@ public class WishController {
     }
 
     @GetMapping("register")
-        public String register() {
+        public String register(Model model) {
+            User user = new User();
+            model.addAttribute("user", user);
             return "register";
         }
 
     @PostMapping("register")
-        public String registerUser(@ModelAttribute User user) {
+        public String registerUser(@ModelAttribute("user") User user) {
             repositoryDB.registerUser(user);
             return "redirect:/wishlist";
     }
