@@ -1,0 +1,12 @@
+body {
+    background-color:#353537;
+}
+
+#container {
+    background-color: #FFFFFF;
+    width:1200px;
+    height:100%;
+    display:block;
+    margin-right:auto;
+    margin-left:auto;
+}
