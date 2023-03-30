@@ -42,14 +42,15 @@ public class RepositoryDB implements IRepositoryDB {
     public List<User> getUsers() {
         List<User> users = new ArrayList<>();
         try {
-            SQL = "SELECT name, username, password FROM user";
+            SQL = "SELECT * FROM user";
             stmt = connection().createStatement();
             rs = stmt.executeQuery(SQL);
             while(rs.next()) {
+                String id = rs.getString("userid");
                 String name = rs.getString("name");
                 String username = rs.getString("username");
                 String password = rs.getString("password");
-                users.add(new User(name, username, password));
+                users.add(new User(id, name, username, password));
             }
             return users;
         } catch (SQLException e) {
@@ -72,7 +73,7 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
-    public UserDTO userDTO (String username) {
+    public UserDTO userDTOByID (String id) {
         UserDTO userDTO = new UserDTO();
         List<WishlistDTO> wishListList = new ArrayList<>();
         try {
@@ -82,9 +83,9 @@ public class RepositoryDB implements IRepositoryDB {
                     "JOIN wishlist wl ON wl.wishlistid = uw.wishlistid " +
                     "JOIN wishlistwish ww ON ww.wishlistid = wl.wishlistid " +
                     "JOIN wish w ON w.wishid = ww.wishid " +
-                    "WHERE u.username = ?";
+                    "WHERE u.userid = ?";
             ps = connection().prepareStatement(SQL);
-            ps.setString(1, username);
+            ps.setString(1, id);
             rs = ps.executeQuery();
             String currentWishlist = "";
             WishlistDTO wishlistDTO;
@@ -104,7 +105,7 @@ public class RepositoryDB implements IRepositoryDB {
                     wishes = new ArrayList<>(List.of(new Wish(wishname, description, url, price)));
                     wishlistDTO = new WishlistDTO(wishlistname, wishes);
                     wishListList.add(wishlistDTO);
-                    userDTO = new UserDTO(name, userusername, password, wishListList);
+                    userDTO = new UserDTO(id, name, userusername, password, wishListList);
                     currentWishlist = wishlistname;
                 }
             }

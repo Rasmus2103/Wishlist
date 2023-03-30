@@ -28,9 +28,9 @@ public class WishController {
         return "index";
     }
 
-    @GetMapping("wishes/{username}")
-    public String getWishes(@PathVariable("username") String username, Model model) {
-        UserDTO userDTO = repositoryDB.userDTO(username);
+    @GetMapping("wishes/{id}")
+    public String getWishes(@PathVariable("id") String id, Model model) {
+        UserDTO userDTO = repositoryDB.userDTOByID(id);
         model.addAttribute("userDTO", userDTO);
         return "wishes";
     }
