@@ -57,6 +57,20 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
+    public void registerUser(User user) {
+        try {
+            SQL = "INSERT INTO user (name, username, password) VALUES (?, ?, ?)";
+            ps = connection().prepareStatement(SQL);
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getUsername());
+            ps.setString(3, user.getPassword());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<WishlistDTO> wishes (String username) {
         List<WishlistDTO> wishListList = new ArrayList<>();
         try {
