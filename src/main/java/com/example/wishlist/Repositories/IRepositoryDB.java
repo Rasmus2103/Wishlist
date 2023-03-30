@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface IRepositoryDB {
     List<User> getUsers();
+    void registerUser(User user);
     List<WishlistDTO> wishes(String username);
 }
