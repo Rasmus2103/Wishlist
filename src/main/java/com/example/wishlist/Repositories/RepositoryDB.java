@@ -88,11 +88,11 @@ public class RepositoryDB implements IRepositoryDB {
             WishlistDTO wishlistDTO;
             List<Wish> wishes = null;
             while (rs.next()) {
-            String wishlistname = rs.getString("wishlistname");
-            String wishname = rs.getString("wishname");
-            String description = rs.getString("description");
-            String url = rs.getString("url");
-            String price = rs.getString("price");
+                String wishlistname = rs.getString("wishlistname");
+                String wishname = rs.getString("wishname");
+                String description = rs.getString("description");
+                String url = rs.getString("url");
+                String price = rs.getString("price");
             if (wishlistname.equals(currentWishlist)){
                 wishes.add(new Wish(wishname, description, url, price));
             } else {

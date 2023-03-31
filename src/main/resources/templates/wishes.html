@@ -7,7 +7,7 @@
     <title>Wishes</title>
 </head>
 <body>
-    <h1>Wishes:</h1>
+    <h1><span th:text="${username}"></span>'s Wishes:</h1>
     <table>
         <tr th:each="wishes: ${wishes}">
             <td th:text="${wishes.name}"></td>
