@@ -6,11 +6,21 @@ import java.util.List;
 public class WishlistDTO extends UserDTO {
 
     private String name;
+    private int wishlistid;
     private List<Wish> wishes;
 
-    public WishlistDTO(String name, List<Wish> wishes) {
+    public WishlistDTO(String name, int wishlistid, List<Wish> wishes) {
+        this.name = name;
+        this.wishlistid = wishlistid;
+        this.wishes = wishes;
+    }
+
+    public WishlistDTO(String name, List<Wish> wishes){
         this.name = name;
         this.wishes = wishes;
+    }
+    public WishlistDTO(){
+
     }
 
     public String getName() {
