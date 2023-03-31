@@ -1,20 +1,22 @@
-package com.example.wishlist.Models;
+package com.example.wishlist.DTO;
+import java.util.List;
 
-public class User {
+public class UserDTO {
 
     private String id;
     private String name;
     private String username;
     private String password;
+    private List<WishlistDTO> wishlistdto;
 
-    public User(String id, String name, String username, String password) {
+    public UserDTO(String id,String name, String username, String password, List<WishlistDTO> wishlistdto) {
         this.name = name;
         this.username = username;
         this.password = password;
-        this.id = id;
+        this.wishlistdto = wishlistdto;
     }
 
-    public User() {
+    public UserDTO() {
 
     }
 
@@ -25,7 +27,6 @@ public class User {
     public void setId(String id) {
         this.id = id;
     }
-
 
     public String getName() {
         return name;
@@ -50,6 +51,15 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public List<WishlistDTO> getWishlistdto() {
+        return wishlistdto;
+    }
+
+    public void setWishlistdto(List<WishlistDTO> wishlistdto) {
+        this.wishlistdto = wishlistdto;
+    }
+
     @Override
     public String toString() {
         return "User{" +

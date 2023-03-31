@@ -1,5 +1,6 @@
 package com.example.wishlist.Controllers;
 
+import com.example.wishlist.DTO.UserDTO;
 import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Models.User;
 import com.example.wishlist.Repositories.IRepositoryDB;
@@ -27,10 +28,10 @@ public class WishController {
         return "index";
     }
 
-    @GetMapping("wishes/{username}")
-    public String getWishes(@PathVariable("username") String username, Model model) {
-        List<WishlistDTO> wishes = repositoryDB.wishes(username);
-        model.addAttribute("wishes", wishes);
+    @GetMapping("wishes/{id}")
+    public String getWishes(@PathVariable("id") String id, Model model) {
+        UserDTO userDTO = repositoryDB.userDTOByID(id);
+        model.addAttribute("userDTO", userDTO);
         return "wishes";
     }
 
@@ -45,6 +46,17 @@ public class WishController {
         public String registerUser(@ModelAttribute("user") User user) {
             repositoryDB.registerUser(user);
             return "redirect:/wishlist";
+    }
+
+    @GetMapping("wishes/{id}/add")
+    public String addWish(@PathVariable("id") String id, Model model) {
+        return "registerwishlist";
+    }
+
+    @PostMapping("wishes/{id}/add")
+    public String addWishList(@PathVariable("id") String id, @ModelAttribute("userDTO") UserDTO userDTO) {
+        repositoryDB.addWishListToUser(id, userDTO);
+        return "redirect:/wishlist/wishes/{id}";
     }
 
 }

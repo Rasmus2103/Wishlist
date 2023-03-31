@@ -7,13 +7,14 @@
     <title>Wishes</title>
 </head>
 <body>
-    <h1><span th:text="${username}"></span>'s Wishes:</h1>
+    <h1>Wishes:</h1>
+    <h1 th:text="${userDTO.name}">name</h1>
     <table>
-        <tr th:each="wishes: ${wishes}">
-            <td th:text="${wishes.name}"></td>
-            <td th:text="${wishes.wishes}"></td>
+        <tr th:each="userDTO: ${userDTO}">
+            <td th:text="${userDTO.wishlistdto}"></td>
         </tr>
         <a href="/wishlist">back</a>
     </table>
+    <a href="/wishlist/wishes/{id}/add">add wishlist</a>
 </body>
 </html>

@@ -13,7 +13,7 @@
  <tr th:each="users: ${user}">
     <td th:text="${users.name}"></td>
      <td>
-         <a th:href="@{wishlist/wishes/{username}(username=${users.username})}">
+         <a th:href="@{wishlist/wishes/{id}(id=${users.id})}">
              <button type="button" class="btn btn-primary btn-sm">Wishes</button>
          </a>
      </td>
