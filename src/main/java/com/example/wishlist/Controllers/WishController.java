@@ -48,6 +48,17 @@ public class WishController {
             return "redirect:/wishlist";
     }
 
+    @GetMapping("wishes/{id}/add")
+    public String addWish(@PathVariable("id") String id, Model model) {
+        return "registerwishlist";
+    }
+
+    @PostMapping("wishes/{id}/add")
+    public String addWishList(@PathVariable("id") String id, @ModelAttribute("userDTO") UserDTO userDTO) {
+        repositoryDB.addWishListToUser(id, userDTO);
+        return "redirect:/wishlist/wishes/{id}";
+    }
+
 }
 
 

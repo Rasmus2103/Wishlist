@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="UTF-8">
+    <title>register wishlist</title>
+</head>
+<body>
+
+<div id="container">
+    <h1>add wishlist</h1>
+    <a href="/wishlist">back</a>
+
+    <form action="/wishlist/register" method="post" th:object="${user}">
+
+        <div class="mb-3">
+            <label  class="form-label">name</label>
+            <input type="text" class="form-control" placeholder="name"}>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+</div>
+</body>
+</html>
