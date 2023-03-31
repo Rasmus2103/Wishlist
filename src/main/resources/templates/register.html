@@ -10,7 +10,8 @@
 
 <div id="container">
 <h1>register site</h1>
-<a href="/wishlist">back</a>
+    <form> <input type="button" value="back" onclick="history.back()"> </form>
+<!--<a href="/wishlist">back</a>-->
 
     <form action="/wishlist/register" method="post" th:object="${user}">
 

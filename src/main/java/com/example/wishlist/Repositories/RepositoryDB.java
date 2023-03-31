@@ -73,7 +73,7 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
-    public UserDTO userDTOByID (String id) {
+    public UserDTO userDTOByID (int userid) {
         UserDTO userDTO = new UserDTO();
         List<WishlistDTO> wishListList = new ArrayList<>();
         try {
@@ -85,7 +85,7 @@ public class RepositoryDB implements IRepositoryDB {
                     "JOIN wish w ON w.wishid = ww.wishid " +
                     "WHERE u.userid = ?";
             ps = connection().prepareStatement(SQL);
-            ps.setString(1, id);
+            ps.setInt(1, userid);
             rs = ps.executeQuery();
             String currentWishlist = "";
             WishlistDTO wishlistDTO;
@@ -105,7 +105,7 @@ public class RepositoryDB implements IRepositoryDB {
                     wishes = new ArrayList<>(List.of(new Wish(wishname, description, url, price)));
                     wishlistDTO = new WishlistDTO(wishlistname, wishes);
                     wishListList.add(wishlistDTO);
-                    userDTO = new UserDTO(id, name, userusername, password, wishListList);
+                    userDTO = new UserDTO(userid, name, userusername, password, wishListList);
                     currentWishlist = wishlistname;
                 }
             }
@@ -116,9 +116,29 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
-    @Override
-    public void addWishListToUser(String id, UserDTO userDTO) {
-
+    public void addWishListToUser(int userid, int wishlistID){
+        try {
+            SQL = "INSERT INTO userwishlist (userid, wishlistID) VALUES (?, ?)";
+            ps = connection().prepareStatement(SQL);
+            ps.setInt(1, userid);
+            ps.setInt(2, wishlistID);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+    public void addWishlist(String wishlistName){
+        try{
+            SQL = "INSERT INTO wishlist (wishlistName) VALUES (?)";
+            ps = connection().prepareStatement(SQL);
+            ps.setString(1, wishlistName);
+            ps.executeUpdate();
+        }
+        catch (SQLException e){
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
     }
 
     /*public WishlistDTO getWishListById(int id) {

@@ -3,14 +3,15 @@ import java.util.List;
 
 public class UserDTO {
 
-    private String id;
+    private int userid;
     private String name;
     private String username;
     private String password;
     private List<WishlistDTO> wishlistdto;
 
-    public UserDTO(String id,String name, String username, String password, List<WishlistDTO> wishlistdto) {
+    public UserDTO(int userid, String name, String username, String password, List<WishlistDTO> wishlistdto) {
         this.name = name;
+        this.userid = userid;
         this.username = username;
         this.password = password;
         this.wishlistdto = wishlistdto;
@@ -20,12 +21,12 @@ public class UserDTO {
 
     }
 
-    public String getId() {
-        return id;
+    public int getUserId() {
+        return userid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(int userid) {
+        this.userid = userid;
     }
 
     public String getName() {

@@ -8,15 +8,15 @@
 
 <div id="container">
     <h1>add wishlist</h1>
-    <a href="/wishlist">back</a>
+    <form> <input type="button" value="back" onclick="history.back()"> </form>
+    <!--<a href="/wishlist/wishes/">back</a>-->
 
-    <form action="/wishlist/register" method="post" th:object="${user}">
+    <form action="/wishlist/wishes/{id}/add" method="post" th:object="${wishlistDTO}">
 
         <div class="mb-3">
             <label  class="form-label">name</label>
-            <input type="text" class="form-control" placeholder="name"}>
+            <input type="text" class="form-control" placeholder="name" th:field="*{name}"}>
         </div>
-
 
         <button type="submit" class="btn btn-primary">Submit</button>
 

@@ -29,8 +29,8 @@ public class WishController {
     }
 
     @GetMapping("wishes/{id}")
-    public String getWishes(@PathVariable("id") String id, Model model) {
-        UserDTO userDTO = repositoryDB.userDTOByID(id);
+    public String getWishes(@PathVariable("id") int userid, Model model) {
+        UserDTO userDTO = repositoryDB.userDTOByID(userid);
         model.addAttribute("userDTO", userDTO);
         return "wishes";
     }
@@ -48,18 +48,23 @@ public class WishController {
             return "redirect:/wishlist";
     }
 
-    @GetMapping("wishes/{id}/add")
-    public String addWish(@PathVariable("id") String id, Model model) {
+    @GetMapping("wishes/{userid}/add")
+    public String addWishList(@PathVariable("userid") int userid, Model model) {
+        WishlistDTO wishlistDTO = new WishlistDTO();
+        model.addAttribute(wishlistDTO);
         return "registerwishlist";
     }
 
-    @PostMapping("wishes/{id}/add")
-    public String addWishList(@PathVariable("id") String id, @ModelAttribute("userDTO") UserDTO userDTO) {
-        repositoryDB.addWishListToUser(id, userDTO);
-        return "redirect:/wishlist/wishes/{id}";
+    @PostMapping("wishes/{userid}/add")
+    public String addWishList(@PathVariable("userid") int userid, /*@ModelAttribute("userDTO")*/ int wishlistID, String wishlistName) {
+        repositoryDB.addWishlist(wishlistName);
+       // repositoryDB.addWishListToUser(userid, wishlistID);
+        return addWishListToUser(userid, wishlistID);
     }
 
+    @PostMapping("wishes/{userid}/adduser")
+    public String addWishListToUser(@PathVariable("userid") int userid, int wishlistID) {
+        repositoryDB.addWishListToUser(userid, wishlistID);
+        return "redirect:/wishlist/wishes";
+    }
 }
-
-
-

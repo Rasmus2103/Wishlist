@@ -13,8 +13,9 @@
         <tr th:each="userDTO: ${userDTO}">
             <td th:text="${userDTO.wishlistdto}"></td>
         </tr>
-        <a href="/wishlist">back</a>
+            <form> <input type="button" value="back" onclick="history.back()"> </form>
+        <!--<a href="/wishlist">back</a>-->
     </table>
-    <a href="/wishlist/wishes/{id}/add">add wishlist</a>
+    <a th:href="@{/wishlist/wishes/{userid}/add(userid=${userDTO.userid})}">add wishlist</a>
 </body>
 </html>
