@@ -8,4 +8,6 @@ public interface IRepositoryDB {
     List<User> getUsers();
     void registerUser(User user);
     UserDTO userDTOByID(String id);
+
+    void addWishListToUser(String id, UserDTO userDTO);
 }

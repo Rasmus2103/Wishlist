@@ -116,6 +116,11 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
+    @Override
+    public void addWishListToUser(String id, UserDTO userDTO) {
+
+    }
+
     /*public WishlistDTO getWishListById(int id) {
         WishlistDTO wishlistDTO = null;
         try {
