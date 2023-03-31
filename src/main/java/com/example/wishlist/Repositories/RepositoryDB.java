@@ -59,6 +59,24 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
+    public List<WishlistDTO> getWishlists() {
+        List<WishlistDTO> wishlists = new ArrayList<>();
+        try {
+            SQL = "SELECT * FROM wishlist";
+            stmt = connection().createStatement();
+            rs = stmt.executeQuery(SQL);
+            while(rs.next()) {
+                int id = rs.getInt("wishlistid");
+                String name = rs.getString("wishlistname");
+                wishlists.add(new WishlistDTO(name, id));
+            }
+            return wishlists;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
     public void registerUser(User user) {
         try {
             SQL = "INSERT INTO user (name, username, password) VALUES (?, ?, ?)";
@@ -138,6 +156,31 @@ public class RepositoryDB implements IRepositoryDB {
         catch (SQLException e){
             System.out.println(e.getMessage());
             throw new RuntimeException();
+        }
+    }
+
+    public void deleteWishlist(int wishlistId) {
+        try {
+            SQL = "SELECT wishlistid FROM wishlist WHERE = ?";
+            ps = connection().prepareStatement(SQL);
+            ps.setInt(1, wishlistId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                wishlistId = rs.getInt("id");
+            }
+
+            SQL = "DELETE FROM wishlistwish WHERE wishlistid = ?";
+            ps = connection().prepareStatement(SQL);
+            ps.setInt(1, wishlistId);
+            ps.executeUpdate();
+
+            SQL = "DELETE FROM wishlist WHERE wishlistid = ?";
+            ps = connection().prepareStatement(SQL);
+            ps.setInt(1, wishlistId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
@@ -320,8 +363,6 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 */
-
-
 
 
 }

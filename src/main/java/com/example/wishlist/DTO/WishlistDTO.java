@@ -9,10 +9,9 @@ public class WishlistDTO extends UserDTO {
     private int wishlistid;
     private List<Wish> wishes;
 
-    public WishlistDTO(String name, int wishlistid, List<Wish> wishes) {
+    public WishlistDTO(String name, int wishlistid) {
         this.name = name;
         this.wishlistid = wishlistid;
-        this.wishes = wishes;
     }
 
     public WishlistDTO(String name, List<Wish> wishes){

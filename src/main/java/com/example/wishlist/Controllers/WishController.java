@@ -67,4 +67,11 @@ public class WishController {
         repositoryDB.addWishListToUser(userid, wishlistID);
         return "redirect:/wishlist/wishes";
     }
+
+    /*@GetMapping("wishes/slet/{wishlistid}")
+    public String deleteWishlist(@PathVariable("wishlistid") int wishlistId, Model model) {
+        repositoryDB.deleteWishlist(wishlistId);
+        model.addAttribute("wishlist", repositoryDB.getWishlists());
+        return "redirect:/wishlist/wishes";
+    }*/
 }

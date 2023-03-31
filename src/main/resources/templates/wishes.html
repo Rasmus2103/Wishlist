@@ -12,10 +12,13 @@
     <table>
         <tr th:each="userDTO: ${userDTO}">
             <td th:text="${userDTO.wishlistdto}"></td>
+            <td>
+                <a href="#">Slet</a>
+            </td>
         </tr>
             <form> <input type="button" value="back" onclick="history.back()"> </form>
         <!--<a href="/wishlist">back</a>-->
     </table>
-    <a th:href="@{/wishlist/wishes/{userid}/add(userid=${userDTO.userid})}">add wishlist</a>
+    <a th:href="@{/wishlist/wishes/{userid}/add(userid=${userDTO.userId})}">add wishlist</a>
 </body>
 </html>
