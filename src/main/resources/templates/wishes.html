@@ -10,14 +10,18 @@
     <h1>Wishes:</h1>
     <h1 th:text="${userDTO.name}">name</h1>
     <table>
+        <tbody>
         <tr th:each="userDTO: ${userDTO}">
             <td th:text="${userDTO.wishlistdto}"></td>
+        </tr>
+        <tr>
             <td>
-                <a href="#">Slet</a>
+                <!-- <a th:href="@{/wishlist/wishes/slet/{wishlistid}(wishlistid=${wishlist})}">Slet</a> -->
             </td>
         </tr>
-            <form> <input type="button" value="back" onclick="history.back()"> </form>
+            <form> <input type="button" value="back" onclick="history.back()"></form>
         <!--<a href="/wishlist">back</a>-->
+        </tbody>
     </table>
     <a th:href="@{/wishlist/wishes/{userid}/add(userid=${userDTO.userId})}">add wishlist</a>
 </body>

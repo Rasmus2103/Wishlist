@@ -13,6 +13,8 @@ public interface IRepositoryDB {
 
     void addWishListToUser(int userid, int wishlistID);
 
-    void addWishlist(String wishlistName);
-    void deleteWishlist(int wishlistId);
+    //void addWishlist(String wishlistName);
+    int addWishlist(String wishlistName);
+
+    //void deleteWishlist(int wishlistId);
 }

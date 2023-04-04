@@ -14,7 +14,7 @@ public class WishlistDTO extends UserDTO {
         this.wishlistid = wishlistid;
     }
 
-    public WishlistDTO(String name, List<Wish> wishes){
+    public WishlistDTO(String name, List<Wish> wishes) {
         this.name = name;
         this.wishes = wishes;
     }

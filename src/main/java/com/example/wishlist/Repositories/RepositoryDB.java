@@ -134,7 +134,7 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
-    public void addWishListToUser(int userid, int wishlistID){
+    public void addWishListToUser(int userid, int wishlistID) {
         try {
             SQL = "INSERT INTO userwishlist (userid, wishlistID) VALUES (?, ?)";
             ps = connection().prepareStatement(SQL);
@@ -146,7 +146,28 @@ public class RepositoryDB implements IRepositoryDB {
             throw new RuntimeException(e);
         }
     }
-    public void addWishlist(String wishlistName){
+
+    public int addWishlist(String wishlistName) {
+        int generatedWishlistId = -1;
+
+        try {
+            String SQL = "INSERT INTO wishlist (wishlistName) VALUES (?)";
+            ps = connection().prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, wishlistName);
+            ps.executeUpdate();
+
+            rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                generatedWishlistId = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
+        return generatedWishlistId;
+    }
+
+    /*public void addWishlist(String wishlistName) {
         try{
             SQL = "INSERT INTO wishlist (wishlistName) VALUES (?)";
             ps = connection().prepareStatement(SQL);
@@ -157,9 +178,10 @@ public class RepositoryDB implements IRepositoryDB {
             System.out.println(e.getMessage());
             throw new RuntimeException();
         }
-    }
+    }*/
 
-    public void deleteWishlist(int wishlistId) {
+
+    /*public void deleteWishlist(int wishlistId) {
         try {
             SQL = "SELECT wishlistid FROM wishlist WHERE = ?";
             ps = connection().prepareStatement(SQL);
@@ -182,7 +204,7 @@ public class RepositoryDB implements IRepositoryDB {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
     /*public WishlistDTO getWishListById(int id) {
         WishlistDTO wishlistDTO = null;
@@ -197,8 +219,8 @@ public class RepositoryDB implements IRepositoryDB {
     }*/
 
 
-    //CREATE Superhero
-    /*public void addSuperhero(SuperHeroForm form) {
+        //CREATE Superhero
+    /*public void addSuperhero(WishlistDTO form) {
         try {
             // ID's
             int cityId = 0;
@@ -363,6 +385,5 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 */
-
 
 }
