@@ -178,15 +178,20 @@ public class RepositoryDB implements IRepositoryDB {
 
     public void deleteWishlist(int wishlistId) {
         try {
-            SQL = "SELECT wishlistid FROM wishlist WHERE = ?";
+            SQL = "SELECT wishlistid FROM wishlist WHERE wishlistid = ?";
             ps = connection().prepareStatement(SQL);
             ps.setInt(1, wishlistId);
             rs = ps.executeQuery();
             if (rs.next()) {
-                wishlistId = rs.getInt("id");
+                wishlistId = rs.getInt("wishlistid");
             }
 
             SQL = "DELETE FROM wishlistwish WHERE wishlistid = ?";
+            ps = connection().prepareStatement(SQL);
+            ps.setInt(1, wishlistId);
+            ps.executeUpdate();
+
+            SQL = "DELETE FROM userwishlist WHERE wishlistid = ?";
             ps = connection().prepareStatement(SQL);
             ps.setInt(1, wishlistId);
             ps.executeUpdate();

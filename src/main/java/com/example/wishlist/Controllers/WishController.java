@@ -72,10 +72,10 @@ public class WishController {
         return "redirect:/wishlist/wishes";
     }
 
-    /*@GetMapping("wishes/slet/{wishlistid}")
-    public String deleteWishlist(@PathVariable("wishlistid") int wishlistId, Model model) {
+    @GetMapping("wishes/slet/{userid}")
+    public String deleteWishlist(@PathVariable("userid") int wishlistId, Model model) {
         repositoryDB.deleteWishlist(wishlistId);
         model.addAttribute("wishlist", repositoryDB.getWishlists());
         return "redirect:/wishlist/wishes";
-    }*/
+    }
 }
