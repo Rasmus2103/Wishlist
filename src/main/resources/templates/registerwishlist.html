@@ -11,17 +11,16 @@
     <form> <input type="button" value="back" onclick="history.back()"> </form>
     <!--<a href="/wishlist/wishes/">back</a>-->
 
-    <form action="#" th:action="@{/wishlist/wishes/{userid}/add(userid=${userWishlistDTO.userId})}" method="post" th:object="${userWishlistDTO}">
+    <form action="#" th:action="@{/wishlist/wishes/{userid}/add(userid=${userid})}" method="post" th:object="${wishlistDTO}">
 
         <div class="mb-3">
-            <input type="hidden" th:field="*{userId}">
             <label  class="form-label">name</label>
-            <input type="text" class="form-control" placeholder="name" th:field="*{wishlistName}">
+            <input type="text" class="form-control" placeholder="name" th:field="*{name}">
 
-            <!-- <label class="form-label">Wishes</label>
+            <label class="form-label">Wishes</label>
             <div th:each="wishes: ${wishes}">
                 <input type="checkbox" th:field="*{wishes}" th:value="wishes" th:text="${wishes}">
-            </div> -->
+            </div>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
