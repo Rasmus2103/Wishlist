@@ -23,28 +23,28 @@ public class RepositoryDB implements IRepositoryDB {
     @Value("${spring.datasource.password}")
     private String pwd;
 
-    private String SQL;
+    /*private String SQL;
     private Statement stmt;
     private ResultSet rs;
     private PreparedStatement ps;
-    private Connection con;
+    private Connection con;*/
 
     public Connection connection() {
         try {
-            con = DriverManager.getConnection(db_url,uid,pwd);
+            Connection con = DriverManager.getConnection(db_url,uid,pwd);
+            return con;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
-        return con;
     }
 
     public List<User> getUsers() {
         List<User> users = new ArrayList<>();
         try {
-            SQL = "SELECT * FROM user";
-            stmt = connection().createStatement();
-            rs = stmt.executeQuery(SQL);
+            String SQL = "SELECT * FROM user";
+            Statement stmt = connection().createStatement();
+            ResultSet rs = stmt.executeQuery(SQL);
             while(rs.next()) {
                 String id = rs.getString("userid");
                 String name = rs.getString("name");
@@ -62,9 +62,9 @@ public class RepositoryDB implements IRepositoryDB {
     public List<WishlistDTO> getWishlists() {
         List<WishlistDTO> wishlists = new ArrayList<>();
         try {
-            SQL = "SELECT * FROM wishlist";
-            stmt = connection().createStatement();
-            rs = stmt.executeQuery(SQL);
+            String SQL = "SELECT * FROM wishlist";
+            Statement stmt = connection().createStatement();
+            ResultSet rs = stmt.executeQuery(SQL);
             while(rs.next()) {
                 int id = rs.getInt("wishlistid");
                 String name = rs.getString("wishlistname");
@@ -79,8 +79,8 @@ public class RepositoryDB implements IRepositoryDB {
 
     public void registerUser(User user) {
         try {
-            SQL = "INSERT INTO user (name, username, password) VALUES (?, ?, ?)";
-            ps = connection().prepareStatement(SQL);
+            String SQL = "INSERT INTO user (name, username, password) VALUES (?, ?, ?)";
+            PreparedStatement ps = connection().prepareStatement(SQL);
             ps.setString(1, user.getName());
             ps.setString(2, user.getUsername());
             ps.setString(3, user.getPassword());
@@ -95,16 +95,16 @@ public class RepositoryDB implements IRepositoryDB {
         UserDTO userDTO = new UserDTO();
         List<WishlistDTO> wishListList = new ArrayList<>();
         try {
-            SQL = "SELECT name, username, password, wishlistname, wishname, description, url, price " +
+            String SQL = "SELECT name, username, password, wishlistname, wishname, description, url, price " +
                     "FROM user u " +
                     "JOIN userwishlist uw ON u.userid = uw.userid " +
                     "JOIN wishlist wl ON wl.wishlistid = uw.wishlistid " +
                     "JOIN wishlistwish ww ON ww.wishlistid = wl.wishlistid " +
                     "JOIN wish w ON w.wishid = ww.wishid " +
                     "WHERE u.userid = ?";
-            ps = connection().prepareStatement(SQL);
+            PreparedStatement ps = connection().prepareStatement(SQL);
             ps.setInt(1, userid);
-            rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             String currentWishlist = "";
             WishlistDTO wishlistDTO;
             List<Wish> wishes = null;
@@ -136,22 +136,34 @@ public class RepositoryDB implements IRepositoryDB {
 
     public void addWishListToUser(int userid, int wishlistID){
         try {
-            SQL = "INSERT INTO userwishlist (userid, wishlistID) VALUES (?, ?)";
-            ps = connection().prepareStatement(SQL);
+            String SQL = "INSERT INTO userwishlist (userid, wishlistID) VALUES (?, ?)";
+            PreparedStatement ps = connection().prepareStatement(SQL);
             ps.setInt(1, userid);
             ps.setInt(2, wishlistID);
             ps.executeUpdate();
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }
-    public void addWishlist(String wishlistName){
+    public void addWishlist(int userid, String wishlistName){
         try{
-            SQL = "INSERT INTO wishlist (wishlistName) VALUES (?)";
-            ps = connection().prepareStatement(SQL);
+            String SQL = "INSERT INTO wishlist (wishlistName) VALUES (?)";
+            PreparedStatement ps = connection().prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, wishlistName);
             ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            int wishlistID = 0;
+            if(rs.next()){
+                wishlistID = rs.getInt(1);
+                System.out.println(wishlistID);
+            }
+            String SQL2 = "INSERT INTO userwishlist (userid, wishlistID) VALUES (?, ?)";
+            PreparedStatement ps2 = connection().prepareStatement(SQL2);
+            ps2.setInt(1, userid);
+            ps2.setInt(2, wishlistID);
+            ps2.executeUpdate();
         }
         catch (SQLException e){
             System.out.println(e.getMessage());
@@ -162,9 +174,9 @@ public class RepositoryDB implements IRepositoryDB {
     public List<String> getWishes() {
         List<String> wishes = new ArrayList<>();
         try {
-            SQL = "SELECT wishname FROM wish";
-            stmt = connection().createStatement();
-            rs = stmt.executeQuery(SQL);
+            String SQL = "SELECT wishname FROM wish";
+            Statement stmt = connection().createStatement();
+            ResultSet rs = stmt.executeQuery(SQL);
             while(rs.next()) {
                 String wish = rs.getString("wishname");
                 wishes.add(wish);
@@ -178,10 +190,10 @@ public class RepositoryDB implements IRepositoryDB {
 
     public void deleteWishlist(int wishlistId) {
         try {
-            SQL = "SELECT wishlistid FROM wishlist WHERE wishlistid = ?";
-            ps = connection().prepareStatement(SQL);
+            String SQL = "SELECT wishlistid FROM wishlist WHERE wishlistid = ?";
+            PreparedStatement ps = connection().prepareStatement(SQL);
             ps.setInt(1, wishlistId);
-            rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 wishlistId = rs.getInt("wishlistid");
             }

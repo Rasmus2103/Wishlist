@@ -18,9 +18,9 @@
             <input type="text" class="form-control" placeholder="name" th:field="*{name}">
 
             <label class="form-label">Wishes</label>
-            <div th:each="wishes: ${wishes}">
+          <!--  <div th:each="wishes: ${wishes}">
                 <input type="checkbox" th:field="*{wishes}" th:value="wishes" th:text="${wishes}">
-            </div>
+            </div> -->
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
