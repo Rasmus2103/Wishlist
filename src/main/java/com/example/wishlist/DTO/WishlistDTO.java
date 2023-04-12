@@ -37,6 +37,14 @@ public class WishlistDTO extends UserDTO {
         this.name = name;
     }
 
+    public int getWishlistid(){
+        return wishlistid;
+    }
+
+    public void setWishlistid(int wishlistid){
+        this.wishlistid = wishlistid;
+    }
+
     public List<Wish> getWishes() {
         return wishes;
     }
