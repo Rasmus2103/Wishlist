@@ -61,7 +61,7 @@ public class WishController {
 
     @PostMapping("wishes/{userid}/add")
     //public String addWishList(@PathVariable("userid") int userid, @ModelAttribute("wishlistDTO") WishlistDTO wishlistDTO) {
-    public String addWishList(@PathVariable("userid") int userid, @ModelAttribute("wishlistDTO") WishlistDTO wishlistDTO, Integer wishlistID, String wishlistName){
+        public String addWishList(@PathVariable("userid") int userid, @ModelAttribute("wishlistDTO") WishlistDTO wishlistDTO, Integer wishlistID, String wishlistName){
         wishlistDTO.setUserId(userid);
         wishlistDTO.setName(wishlistName);
         System.out.println(wishlistDTO.getUserId() + " " + wishlistDTO.getName());
