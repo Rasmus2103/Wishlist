@@ -24,7 +24,7 @@ public class WishlistDTO extends UserDTO {
         this.wishes = wishes;
     }
 
-    public WishlistDTO(){
+    public WishlistDTO() {
 
     }
 

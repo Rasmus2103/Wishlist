@@ -69,7 +69,9 @@ public class RepositoryDB implements IRepositoryDB {
             ps.setInt(1, wishlistId);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-
+                int wishlistid = rs.getInt("wishlistid");
+                String wishlistName = rs.getString("wishlistname");
+                List<String> wishes = getWishes();
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
