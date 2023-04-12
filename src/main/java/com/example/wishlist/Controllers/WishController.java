@@ -32,6 +32,9 @@ public class WishController {
     public String getWishes(@PathVariable("id") int userid, Model model) {
         UserDTO userDTO = repositoryDB.userDTOByID(userid);
         model.addAttribute("userDTO", userDTO);
+
+        List<WishlistDTO> wishLists = repositoryDB.getWishlists(userid);
+        model.addAttribute("wishlists", wishLists);
         return "wishes";
     }
 
@@ -80,7 +83,7 @@ public class WishController {
     @GetMapping("wishes/slet/{userid}")
     public String deleteWishlist(@PathVariable("userid") int wishlistId, Model model) {
         repositoryDB.deleteWishlist(wishlistId);
-        model.addAttribute("wishlist", repositoryDB.getWishlists());
+        model.addAttribute("wishlist", repositoryDB.getWishlists(wishlistId));
         return "redirect:/wishlist/wishes";
     }
 }

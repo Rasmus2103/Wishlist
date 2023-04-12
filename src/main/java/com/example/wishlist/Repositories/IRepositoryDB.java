@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IRepositoryDB {
     List<User> getUsers();
-    List<WishlistDTO> getWishlists();
+    List<WishlistDTO> getWishlists(int userId);
     void registerUser(User user);
     UserDTO userDTOByID(int userid);
 

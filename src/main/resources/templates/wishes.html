@@ -13,8 +13,8 @@
     <h1 th:text="${userDTO.name}">name</h1>
     <table>
         <tbody>
-        <tr th:each="userDTO: ${userDTO}">
-            <td th:text="${userDTO.wishlistdto}"></td>
+        <tr th:each="wishlist: ${wishlists}">
+            <td th:text="${wishlist.name}"></td>
             <td>
                 <a th:href="@{/wishlist/wishes/slet/{userid}(userid=${userDTO.userId})}" onclick="return confirm('Er du sikker?')">Slet</a>
             </td>
