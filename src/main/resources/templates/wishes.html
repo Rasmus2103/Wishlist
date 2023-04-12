@@ -19,6 +19,11 @@
                 <a th:href="@{/wishlist/wishes/slet/{userid}(userid=${userDTO.userId})}" onclick="return confirm('Er du sikker?')">Slet</a>
             </td>
         </tr>
+        <tr>
+            <td>
+                <a th:href="@{/wishlist/addwish/{userid}(userid=${userDTO.userId})}">add wish to wishlist</a>
+            </td>
+        </tr>
             <form> <input type="button" value="back" onclick="history.back()"></form>
         <!--<a href="/wishlist">back</a>-->
         </tbody>
