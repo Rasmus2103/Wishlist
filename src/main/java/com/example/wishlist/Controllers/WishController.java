@@ -59,6 +59,20 @@ public class WishController {
         return "registerwishlist";
     }
 
+    @GetMapping("addwish/{userid}")
+    public String addWishToWishList(@PathVariable("userid") int userid, Model model) {
+        WishlistDTO wishlistDTO = new WishlistDTO();
+        model.addAttribute("wishlistDTO", wishlistDTO);
+        return "registerwish";
+    }
+
+    @PostMapping("addwish")
+    public String addWishToWishList(Model model) {
+        WishlistDTO wishlistDTO = new WishlistDTO();
+        model.addAttribute("wishlistDTO", wishlistDTO);
+        return "redirect:/wishlist";
+    }
+
     @PostMapping("wishes/{userid}/add")
     //public String addWishList(@PathVariable("userid") int userid, @ModelAttribute("wishlistDTO") WishlistDTO wishlistDTO) {
         public String addWishList(@PathVariable("userid") int userid, @ModelAttribute("wishlistDTO") WishlistDTO wishlistDTO, Integer wishlistID, String wishlistName){

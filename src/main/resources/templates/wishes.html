@@ -17,7 +17,7 @@
 
         <tr>
             <td>
-                <a th:href="@{/wishlist/wishes/slet/{userid}(userid=${userDTO.userId})}">add wish to wishlist</a>
+                <a th:href="@{/wishlist/addwish/{userid}(userid=${userDTO.userId})}">add wish to wishlist</a>
             </td>
         </tr>
 
@@ -27,7 +27,6 @@
             </td>
         </tr>
             <form> <input type="button" value="back" onclick="history.back()"></form>
-        <!--<a href="/wishlist">back</a>-->
         </tbody>
     </table>
     <a th:href="@{/wishlist/wishes/{userid}/add(userid=${userDTO.userId})}">add wishlist</a>
