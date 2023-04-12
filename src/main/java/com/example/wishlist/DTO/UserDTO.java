@@ -29,12 +29,12 @@ public class UserDTO {
         this.userid = userid;
     }
 
-    public String getName() {
+    public String getWishlistname() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setWishlistname(String wishlistname) {
+        this.name = wishlistname;
     }
 
     public String getUsername() {
