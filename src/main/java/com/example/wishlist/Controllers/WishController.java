@@ -63,10 +63,12 @@ public class WishController {
     //public String addWishList(@PathVariable("userid") int userid, @ModelAttribute("wishlistDTO") WishlistDTO wishlistDTO) {
         public String addWishList(@PathVariable("userid") int userid, @ModelAttribute("wishlistDTO") WishlistDTO wishlistDTO, Integer wishlistID, String wishlistName){
         wishlistDTO.setUserId(userid);
-        wishlistDTO.setName(wishlistName);
-        System.out.println(wishlistDTO.getUserId() + " " + wishlistDTO.getName());
-        repositoryDB.addWishlist(wishlistDTO.getUserId(), wishlistDTO.getName());
+        wishlistDTO.setWishlistname(wishlistName);
+        System.out.println(wishlistDTO.getUserId() + " " + wishlistDTO.getWishlistname());
+        repositoryDB.addWishlist(wishlistDTO.getUserId(), wishlistDTO.getWishlistname());
         repositoryDB.addWishListToUser(userid, wishlistID);
+        System.out.println(wishlistDTO.getUserId() + " " + wishlistDTO.getWishlistname());
+
         //repositoryDB.addWishListToUser(userid, wishlistDTO.g);
         //return addWishListToUser(userid, wishlistDTO.getUserId());
         return "redirect:/wishlist/wishes/{userid}";

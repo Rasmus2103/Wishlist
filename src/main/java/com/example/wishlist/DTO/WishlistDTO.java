@@ -5,22 +5,22 @@ import java.util.List;
 
 public class WishlistDTO extends UserDTO {
 
-    private String name;
+    private String wishlistname;
     private int wishlistid;
     private List<Wish> wishes;
 
-    public WishlistDTO(String name, int wishlistid) {
-        this.name = name;
+    public WishlistDTO(String wishlistname, int wishlistid) {
+        this.wishlistname = wishlistname;
         this.wishlistid = wishlistid;
     }
 
-    public WishlistDTO(String name, List<Wish> wishes) {
-        this.name = name;
+    public WishlistDTO(String wishlistname, List<Wish> wishes) {
+        this.wishlistname = wishlistname;
         this.wishes = wishes;
     }
 
-    public WishlistDTO(String name, int wishlistid, List<Wish> wishes){
-        this.name = name;
+    public WishlistDTO(String wishlistname, int wishlistid, List<Wish> wishes){
+        this.wishlistname = wishlistname;
         this.wishlistid = wishlistid;
         this.wishes = wishes;
     }
@@ -29,12 +29,12 @@ public class WishlistDTO extends UserDTO {
 
     }
 
-    public String getName() {
-        return name;
+    public String getWishlistname() {
+        return wishlistname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setWishlistname(String wishlistname) {
+        this.wishlistname = wishlistname;
     }
 
     public int getWishlistid(){
@@ -56,7 +56,7 @@ public class WishlistDTO extends UserDTO {
     @Override
     public String toString() {
         return "WishlistDTO{" +
-                "name='" + name + '\'' +
+                "name='" + wishlistname + '\'' +
                 ", wishes=" + wishes +
                 '}';
     }
