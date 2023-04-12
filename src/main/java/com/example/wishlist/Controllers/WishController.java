@@ -51,7 +51,7 @@ public class WishController {
     @GetMapping("wishes/{userid}/add")
     public String addWishList(@PathVariable("userid") int userid, Model model) {
         WishlistDTO wishlistDTO = new WishlistDTO();
-        model.addAttribute(wishlistDTO);
+        model.addAttribute("wishlistDTO", wishlistDTO);
 
         List<String> wishes = repositoryDB.getWishes();
         model.addAttribute("wishes", wishes);
@@ -60,9 +60,14 @@ public class WishController {
     }
 
     @PostMapping("wishes/{userid}/add")
-    public String addWishList(@PathVariable("userid") int userid, @ModelAttribute("wishlistDTO") Integer wishlistID, String wishlistName) {
-        repositoryDB.addWishlist(wishlistName);
-        return addWishListToUser(userid, wishlistID);
+    //public String addWishList(@PathVariable("userid") int userid, @ModelAttribute("wishlistDTO") WishlistDTO wishlistDTO) {
+    public String addWishList(@PathVariable("userid") int userid, @ModelAttribute("wishlistDTO") WishlistDTO wishlistDTO, Integer wishlistID, String wishlistName){
+        wishlistDTO.setUserId(userid);
+        wishlistDTO.setName(wishlistName);
+        System.out.println(wishlistDTO.getUserId() + " " + wishlistDTO.getName());
+        repositoryDB.addWishlist(wishlistDTO.getUserId(), wishlistDTO.getName());
+        //repositoryDB.addWishListToUser(userid, wishlistDTO.g);
+        return addWishListToUser(userid, wishlistDTO.getUserId());
         // repositoryDB.addWishListToUser(userid, wishlistID);
     }
 

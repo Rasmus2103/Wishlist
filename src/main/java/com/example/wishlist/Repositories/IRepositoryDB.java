@@ -13,7 +13,7 @@ public interface IRepositoryDB {
 
     void addWishListToUser(int userid, int wishlistID);
 
-    void addWishlist(String wishlistName);
+    void addWishlist(int userID, String wishlistName);
     List<String> getWishes();
 
     void deleteWishlist(int wishlistId);
