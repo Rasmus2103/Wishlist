@@ -60,14 +60,22 @@ public class RepositoryDB implements IRepositoryDB {
     }
 
     public WishlistDTO findWishlistById(int wishlistId) {
+        WishlistDTO wishlistDTO = null;
         try {
             String SQL = "SELECT wishname, description, url, price, wishlistname FROM wish w \n" +
                     "JOIN wishlistwish ww ON w.wishid = ww.wishid \n" +
-                    "JOIN wishlist wl ON wl.wishlistid = w.wishid";
+                    "JOIN wishlist wl ON wl.wishlistid = w.wishid WHERE wishlistid = ?";
+            PreparedStatement ps = connection().prepareStatement(SQL);
+            ps.setInt(1, wishlistId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
+        return wishlistDTO;
     }
 
     public List<WishlistDTO> getWishlists(int userId) {
