@@ -3,6 +3,7 @@ package com.example.wishlist.Controllers;
 import com.example.wishlist.DTO.UserDTO;
 import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Models.User;
+import com.example.wishlist.Models.Wish;
 import com.example.wishlist.Repositories.IRepositoryDB;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -35,6 +36,9 @@ public class WishController {
 
         List<WishlistDTO> wishLists = repositoryDB.getWishlists(userid);
         model.addAttribute("wishlists", wishLists);
+
+        List<Wish> wishes = repositoryDB.getWishes(userid);
+        model.addAttribute("wishes", wishes);
         return "wishes";
     }
 
@@ -56,23 +60,22 @@ public class WishController {
         WishlistDTO wishlistDTO = new WishlistDTO();
         model.addAttribute("wishlistDTO", wishlistDTO);
 
-        List<String> wishes = repositoryDB.getWishes();
+        List<Wish> wishes = repositoryDB.getWishes(userid);
         model.addAttribute("wishes", wishes);
 
         return "registerwishlist";
     }
 
-    @GetMapping("addwish/{userid}")
-    public String addWishToWishList(@PathVariable("userid") int userid, Model model) {
-        WishlistDTO wishlistDTO = new WishlistDTO();
-        model.addAttribute("wishlistDTO", wishlistDTO);
+    @GetMapping("addwish/{wishlistid}")
+    public String addWishToWishList(@PathVariable("wishlistid") int wishlistid, Model model) {
+        Wish wish = new Wish();
+        model.addAttribute("wishes", wish);
         return "registerwish";
     }
 
-    @PostMapping("addwish")
-    public String addWishToWishList(Model model) {
-        WishlistDTO wishlistDTO = new WishlistDTO();
-        model.addAttribute("wishlistDTO", wishlistDTO);
+    @PostMapping("addwish/{wishlistid}")
+    public String addWishToWishList(@ModelAttribute("wishes") Wish wish, @PathVariable int wishlistid) {
+        repositoryDB.addWishToWishlist(wish, wishlistid);
         return "redirect:/wishlist";
     }
 
@@ -99,5 +102,12 @@ public class WishController {
         repositoryDB.deleteWishlist(wishlistId);
         model.addAttribute("wishlist", repositoryDB.getWishlists(wishlistId));
         return "redirect:/wishlist/wishes/{userid}";
+    }
+
+    @GetMapping("wishes/sletwish/{wishid}")
+    public String deleteWish(@PathVariable("wishid") int wishId, Model model){
+        repositoryDB.deleteWish(wishId);
+        model.addAttribute("wishes", repositoryDB.getWishlists(wishId));
+        return "redirect:/wishlist";
     }
 }

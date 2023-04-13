@@ -4,6 +4,7 @@ import com.example.wishlist.DTO.UserDTO;
 import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Models.User;
 import com.example.wishlist.Models.Wish;
+import org.springframework.aop.scope.ScopedObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -71,7 +72,7 @@ public class RepositoryDB implements IRepositoryDB {
             if (rs.next()) {
                 int wishlistid = rs.getInt("wishlistid");
                 String wishlistName = rs.getString("wishlistname");
-                List<String> wishes = getWishes();
+                List<Wish> wishes = getWishes(wishlistId);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -83,7 +84,7 @@ public class RepositoryDB implements IRepositoryDB {
     public List<WishlistDTO> getWishlists(int userId) {
         List<WishlistDTO> wishlists = new ArrayList<>();
         try {
-            String SQL = "SELECT wishlistname, name FROM wishlist w \n" +
+            String SQL = "SELECT wishlistname, w.wishlistid, name FROM wishlist w \n" +
                     "JOIN userwishlist uw ON w.wishlistid = uw.wishlistid\n" +
                     "JOIN user u ON u.userid = w.wishlistid WHERE u.userid = ?;";
             PreparedStatement ps = connection().prepareStatement(SQL);
@@ -91,7 +92,8 @@ public class RepositoryDB implements IRepositoryDB {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 String name = rs.getString("wishlistname");
-                wishlists.add(new WishlistDTO(name));
+                int wishlistid = rs.getInt("wishlistid");
+                wishlists.add(new WishlistDTO(name, wishlistid));
             }
             return wishlists;
         } catch (SQLException e) {
@@ -157,6 +159,41 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
+    public void addWishToWishlist(Wish wish, int wishlistid) {
+        try {
+            int wishId = 0;
+
+            String SQL = "INSERT INTO wish (wishname, description, url, price) VALUES (?, ?, ?, ?)";
+            PreparedStatement ps = connection().prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, wish.getName());
+            ps.setString(2, wish.getDescription());
+            ps.setString(3, wish.getUrl());
+            ps.setString(4, wish.getPrice());
+            ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                wishId = rs.getInt(1);
+            }
+
+            String SQL2 = "SELECT wishlistid FROM wishlistwish WHERE wishlistid = ?";
+            PreparedStatement ps2 = connection().prepareStatement(SQL2);
+            ps2.setInt(1, wishlistid);
+            ResultSet rs2= ps.executeQuery();
+            if (rs.next()) {
+                wishlistid = rs2.getInt(1);
+            }
+
+            String SQL3 = "INSERT INTO wishlistwish VALUES (?,?)";
+            PreparedStatement ps3 = connection().prepareStatement(SQL3);
+            ps3.executeUpdate();
+            ps3.setInt(1, wishlistid);
+            ps3.setInt(2, wishId);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
     public void addWishListToUser(int userid, int wishlistID){
         try {
             String SQL = "INSERT INTO userwishlist (userid, wishlistID) VALUES (?, ?)";
@@ -194,15 +231,24 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
-    public List<String> getWishes() {
-        List<String> wishes = new ArrayList<>();
+    public List<Wish> getWishes(int userId) {
+        List<Wish> wishes = new ArrayList<>();
         try {
-            String SQL = "SELECT wishname FROM wish";
-            Statement stmt = connection().createStatement();
-            ResultSet rs = stmt.executeQuery(SQL);
+            String SQL = "SELECT wl.wishlistname, w.wishname, w.description, w.url, w.price\n" +
+                    "FROM user u\n" +
+                    "JOIN userwishlist uw ON u.userid = uw.userid\n" +
+                    "JOIN wishlist wl ON wl.wishlistid = uw.wishlistid\n" +
+                    "JOIN wishlistwish ww ON ww.wishlistid = wl.wishlistid\n" +
+                    "JOIN wish w ON w.wishid = ww.wishid WHERE u.userid = ?";
+            PreparedStatement ps = connection().prepareStatement(SQL);
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 String wish = rs.getString("wishname");
-                wishes.add(wish);
+                String desription = rs.getString("description");
+                String url = rs.getString("url");
+                String price = rs.getString("price");
+                wishes.add(new Wish(wish, desription, url, price));
             }
             return wishes;
         } catch (SQLException e){
@@ -239,6 +285,31 @@ public class RepositoryDB implements IRepositoryDB {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    public void deleteWish(int wishId) {
+       try {
+           String SQL = "SELECT wishid FROM wish WHERE wishid = ?";
+           PreparedStatement ps = connection().prepareStatement(SQL);
+           ps.setInt(1, wishId);
+           ResultSet rs = ps.executeQuery();
+           if (rs.next()) {
+               wishId = rs.getInt("wishid");
+           }
+           SQL = "DELETE FROM wishlistwish WHERE wishid = ?";
+           ps = connection().prepareStatement(SQL);
+           ps.setInt(1, wishId);
+           ps.executeUpdate();
+
+           SQL = "DELETE FROM wish WHERE wishid = ?";
+           ps = connection().prepareStatement(SQL);
+           ps.setInt(1, wishId);
+           ps.executeUpdate();
+
+       } catch (SQLException e) {
+           System.out.println(e.getMessage());
+           throw new RuntimeException(e);
+       }
     }
 
     /*public WishlistDTO getWishListById(int id) {
