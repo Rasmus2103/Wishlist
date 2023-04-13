@@ -22,7 +22,7 @@
                 <a th:href="@{/wishlist/wishes/{userid}/add(userid=${userDTO.userId})}">add wish to wishlist</a>
             </td>
             -->
-            <td th:each="userDTO: ${userDTO.wishlistdto}">
+            <td th:each="userDTO: ${userDTO}">
                 <td th:text="${userDTO.getWishlistdto()}"> <td/>
             </td>
         </tr>

@@ -14,6 +14,10 @@ public class Wish {
         this.price = price;
     }
 
+    public Wish() {
+
+    }
+
     public String getName() {
         return name;
     }
