@@ -4,10 +4,8 @@ import com.example.wishlist.DTO.UserDTO;
 import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Models.User;
 import com.example.wishlist.Models.Wish;
-import org.springframework.aop.scope.ScopedObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +21,6 @@ public class RepositoryDB implements IRepositoryDB {
 
     @Value("${spring.datasource.password}")
     private String pwd;
-
-    /*private String SQL;
-    private Statement stmt;
-    private ResultSet rs;
-    private PreparedStatement ps;
-    private Connection con;*/
 
     public Connection connection() {
         try {

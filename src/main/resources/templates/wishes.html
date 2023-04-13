@@ -20,13 +20,7 @@
                 <a th:href="@{/wishlist/wishes/slet/{userid}(userid=${userDTO.userId})}" onclick="return confirm('Er du sikker?')">Slet</a>
                 <a th:href="@{/wishlist/addwish/{wishlistid}(wishlistid=${wishlist.getWishlistid()})}">add wish to wishlist</a>
             </td>
-            <!-- <td th:each="${userDTO.wishlistdto}">
-                <a th:href="@{/wishlist/wishes/{userid}/add(userid=${userDTO.userId})}">add wish to wishlist</a>
-            </td>
-            -->
-            <!--<td th:each="userDTO: ${userDTO.wishlistdto}">
-                <td th:text="${userDTO.getWishlistdto()}">
-            </td> -->
+
         </tr>
         <tr th:each="wishes: ${wishes}">
             <td th:text="${wishes.name}"></td>
