@@ -89,7 +89,7 @@ public class RepositoryDB implements IRepositoryDB {
     public List<WishlistDTO> getWishlists(int userId) {
         List<WishlistDTO> wishlists = new ArrayList<>();
         try {
-            String SQL = "SELECT wishlistname, wishlistid, FROM wishlist WHERE userid = ?;";
+            String SQL = "SELECT wishlistname, wishlistid FROM wishlist WHERE userid = ?;";
             PreparedStatement ps = connection().prepareStatement(SQL);
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();

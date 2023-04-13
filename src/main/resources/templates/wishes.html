@@ -10,14 +10,14 @@
 <div id="container">
 
     <h1>Wishes:</h1>
-    <h1 th:text="${userDTO.name}">name</h1>
+    <h1 th:text="${user.name}">name</h1>
     <table>
         <tbody>
         <tr th:each="wishlist: ${wishlists}">
             <td th:text="${wishlist.name}"></td>
             <td th:text="${wishlist.getWishlistid()}"></td>
             <td>
-                <a th:href="@{/wishlist/wishes/slet/{userid}(userid=${userDTO.userId})}" onclick="return confirm('Er du sikker?')">Slet</a>
+                <a th:href="@{/wishlist/wishes/slet/{userid}(userid=${user.id})}" onclick="return confirm('Er du sikker?')">Slet</a>
                 <a th:href="@{/wishlist/addwish/{wishlistid}(wishlistid=${wishlist.getWishlistid()})}">add wish to wishlist</a>
             </td>
 
@@ -35,7 +35,7 @@
             <form> <input type="button" value="back" onclick="history.back()"></form>
         </tbody>
     </table>
-    <a th:href="@{/wishlist/wishes/{userid}/add(userid=${userDTO.userId})}">add wishlist</a>
+    <a th:href="@{/wishlist/wishes/{userid}/add(userid=${user.id})}">add wishlist</a>
 </div>
 </body>
 </html>
