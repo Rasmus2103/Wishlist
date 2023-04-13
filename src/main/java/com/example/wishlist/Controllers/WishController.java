@@ -5,11 +5,19 @@ import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Models.User;
 import com.example.wishlist.Repositories.IRepositoryDB;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.TemplateEngine;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.List;
 
 @Controller
@@ -101,4 +109,30 @@ public class WishController {
         model.addAttribute("wishlist", repositoryDB.getWishlists(wishlistId));
         return "redirect:/wishlist/wishes/{userid}";
     }
+
+    //TODO: Fix this, and create relevant mapping for the html pages
+    /*
+    @GetMapping("news")
+    public String news() {
+        return "news";
+    }
+
+
+    @GetMapping("about")
+    public String about() {
+        return "about";
+    }
+
+
+    @GetMapping("FAQ")
+    public ResponseEntity<String> getFAQ() throws IOException {
+        // Load the HTML document from the resource loader
+        ResourceLoader resourceLoader = resourceLoader.getResource("classpath:example.html");
+        String htmlContent = new String(Files.readAllBytes(resource.getFile().toPath()), StandardCharsets.UTF_8);
+
+        // Return the HTML content as a ResponseEntity with OK status
+        return new ResponseEntity<>(htmlContent, HttpStatus.OK);
+    }
+
+    */
 }

@@ -1,0 +1,261 @@
+body {
+    background-color:#353537;
+}
+
+/* Style for the header */
+#container {
+    background-color: #FFFFFF;
+    width:1200px;
+    height:100%;
+    display: block;
+    margin-right:auto;
+    margin-left:auto;
+}
+
+/* Style for slider container */
+.slider-container {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto;
+}
+
+/* Style for slider wrapper */
+.slider-wrapper {
+    display: flow;
+    transition: ease-in 5s;
+    height: 100%;
+}
+
+/* Style for each slide */
+.slider-item {
+    flex: 100%;
+    height: 100%;
+}
+
+/* Style for slide images */
+.slider-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+/* Style for previous/next buttons */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #ddd;
+    color: #333;
+    z-index: 1;
+}
+
+.prev {
+    left: 0;
+}
+
+.next {
+    right: 0;
+}
+.index_hyperlink {
+    color: #353537;
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+}
+
+.main_index {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 0px;
+}
+
+.about-section {
+    margin-bottom: 40px;
+}
+
+.about-section h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.about-section p {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #777;
+}
+
+/* Footer styles */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+footer p {
+    font-size: 14px;
+    margin: 0;
+}
+
+.footer-links {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.footer-links li {
+    display: inline;
+}
+
+.footer-links li a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.footer-links li a:hover {
+    color: #ccc;
+}
+
+.intro-container {
+    padding: 40px 0;
+}
+
+.screenshot {
+    margin-top: 20px;
+    max-width: 100%;
+}
+
+.features-section2 {
+    margin-bottom: 40px;
+}
+
+.features-section h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.features-section ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.features-section li {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+.team-section {
+    margin-bottom: 40px;
+}
+
+.team-section h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.team-section ul {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+}
+
+.team-member-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.team-section h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.team-section p {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 0;
+}
+
+.faq-section {
+    margin-bottom: 40px;
+}
+
+.faq-section h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.faq-section p {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #777;
+}
+
+.news-section {
+    margin-bottom: 40px;
+}
+
+.news-section h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.news-section p {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #777;
+}
+
+.news-date {
+    font-size: 14px;
+    color: #999;
+}
+
+.features-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.feature-item {
+    flex-basis: 400px;
+    margin: 30px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.feature-item img {
+    max-width: 100px;
+    margin-bottom: 20px;
+}
+
+.feature-item h2 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.feature-item p {
+    font-size: 16px;
+    color: #777;
+    margin-top: 10px;
+}

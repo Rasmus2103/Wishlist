@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{styles.css}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <title>About</title>
+</head>
+
+<body>
+
+<form> <input type="button" value="back" onclick="history.back()"> </form>
+
+<div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <a href="/">
+                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+            </a>
+            <a class="index_hyperlink" th:href="@{index}">
+                <h1 class="fs-4"> Wishlist </h1>
+            </a>
+        </div>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a th:href="@{news}" class="nav-link">News</a></li>
+            <li class="nav-item"><a th:href="@{FAQ}" class="nav-link">FAQs</a></li>
+            <li class="nav-item"><a th:href="@{about}" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Login</a></li>
+        </ul>
+    </header>
+</div>
+
+
+<main>
+    <section class="about-section">
+        <h2>Welcome to Wishlist Creator</h2>
+        <p>
+            Wishlist Creator is a web app that lets you create and share wishlists for any occasion. Whether it's your birthday, a holiday, or just because, Wishlist Creator makes it easy to keep track of the things you want and share them with others.
+        </p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png" alt="Wishlist Creator Screenshot" class="screenshot">
+    </section>
+    <section class="features-section2">
+        <h2>Features</h2>
+        <ul>
+            <li>Create and manage multiple wishlists</li>
+            <li>Add items with images, descriptions, and links</li>
+            <li>Organize items into categories</li>
+            <li>Share wishlists with friends and family</li>
+            <li>Mark items as purchased</li>
+            <li>Customize wishlist settings and privacy</li>
+        </ul>
+    </section>
+    <section class="team-section">
+        <h2>Our Team</h2>
+        <ul>
+            <li>
+                <img src="https://media.istockphoto.com/id/1167753373/vector/woman-avatar-isolated-on-white-background-vector-illustration-for-your-design.jpg?s=612x612&w=0&k=20&c=Y2a_YXRjZ3bXa3Jn2EStSXv7hJly0uEkdlWk4tdbI6U=" alt="John Doe" class="team-member-image">
+                <h3>Jonathan</h3>
+                <p>Certified Hustler</p>
+            </li>
+            <li>
+                <img src="https://media.istockphoto.com/id/1167753373/vector/woman-avatar-isolated-on-white-background-vector-illustration-for-your-design.jpg?s=612x612&w=0&k=20&c=Y2a_YXRjZ3bXa3Jn2EStSXv7hJly0uEkdlWk4tdbI6U=" alt="Jane Smith" class="team-member-image">
+                <h3>Rasmus</h3>
+                <p>Like a Boss</p>
+            </li>
+            <li>
+                <img src="https://media.istockphoto.com/id/1167753373/vector/woman-avatar-isolated-on-white-background-vector-illustration-for-your-design.jpg?s=612x612&w=0&k=20&c=Y2a_YXRjZ3bXa3Jn2EStSXv7hJly0uEkdlWk4tdbI6U=" alt="Mark Johnson" class="team-member-image">
+                <h3>Nikolai</h3>
+                <p>ChatGPT Professional</p>
+            </li>
+            <li>
+                <img src="https://media.istockphoto.com/id/1167753373/vector/woman-avatar-isolated-on-white-background-vector-illustration-for-your-design.jpg?s=612x612&w=0&k=20&c=Y2a_YXRjZ3bXa3Jn2EStSXv7hJly0uEkdlWk4tdbI6U=" alt="Mark Johnson" class="team-member-image">
+                <h3>Mark</h3>
+                <p>Coffee Grinder</p>
+            </li>
+        </ul>
+    </section>
+</main>
+</body>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p>© 2023 SmoothWishlist. All rights reserved.</p>
+            </div>
+            <div class="col-md-6">
+                <ul class="footer-links">
+                    <li><a href="https://github.com/Rasmus2103/Wishlist" target="_blank">GitHub Repository</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link  type="text/css" rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <title>About</title>
+</head>
+<body>
+
+<div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <a href="/">
+                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+            </a>
+            <a class="index_hyperlink" href="index.html">
+                <h1 class="fs-4"> Wishlist </h1>
+            </a>
+        </div>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a href="news.html" class="nav-link">News</a></li>
+            <li class="nav-item"><a href="FAQ.html" class="nav-link">FAQs</a></li>
+            <li class="nav-item"><a href="About.html" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Login</a></li>
+        </ul>
+    </header>
+</div>
+
+
+<main>
+    <section class="about-section">
+        <h2>Welcome to Wishlist Creator</h2>
+        <p>
+            Wishlist Creator is a web app that lets you create and share wishlists for any occasion. Whether it's your birthday, a holiday, or just because, Wishlist Creator makes it easy to keep track of the things you want and share them with others.
+        </p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png" alt="Wishlist Creator Screenshot" class="screenshot">
+    </section>
+    <section class="features-section2">
+        <h2>Features</h2>
+        <ul>
+            <li>Create and manage multiple wishlists</li>
+            <li>Add items with images, descriptions, and links</li>
+            <li>Organize items into categories</li>
+            <li>Share wishlists with friends and family</li>
+            <li>Mark items as purchased</li>
+            <li>Customize wishlist settings and privacy</li>
+        </ul>
+    </section>
+    <section class="team-section">
+        <h2>Our Team</h2>
+        <ul>
+            <li>
+                <img src="https://media.istockphoto.com/id/1167753373/vector/woman-avatar-isolated-on-white-background-vector-illustration-for-your-design.jpg?s=612x612&w=0&k=20&c=Y2a_YXRjZ3bXa3Jn2EStSXv7hJly0uEkdlWk4tdbI6U=" alt="John Doe" class="team-member-image">
+                <h3>Jonathan</h3>
+                <p>Certified Hustler</p>
+            </li>
+            <li>
+                <img src="https://media.istockphoto.com/id/1167753373/vector/woman-avatar-isolated-on-white-background-vector-illustration-for-your-design.jpg?s=612x612&w=0&k=20&c=Y2a_YXRjZ3bXa3Jn2EStSXv7hJly0uEkdlWk4tdbI6U=" alt="Jane Smith" class="team-member-image">
+                <h3>Rasmus</h3>
+                <p>Like a Boss</p>
+            </li>
+            <li>
+                <img src="https://media.istockphoto.com/id/1167753373/vector/woman-avatar-isolated-on-white-background-vector-illustration-for-your-design.jpg?s=612x612&w=0&k=20&c=Y2a_YXRjZ3bXa3Jn2EStSXv7hJly0uEkdlWk4tdbI6U=" alt="Mark Johnson" class="team-member-image">
+                <h3>Nikolai</h3>
+                <p>ChatGPT Professional</p>
+            </li>
+            <li>
+                <img src="https://media.istockphoto.com/id/1167753373/vector/woman-avatar-isolated-on-white-background-vector-illustration-for-your-design.jpg?s=612x612&w=0&k=20&c=Y2a_YXRjZ3bXa3Jn2EStSXv7hJly0uEkdlWk4tdbI6U=" alt="Mark Johnson" class="team-member-image">
+                <h3>Mark</h3>
+                <p>Coffee Grinder</p>
+            </li>
+        </ul>
+    </section>
+</main>
+</body>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p>© 2023 SmoothWishlist. All rights reserved.</p>
+            </div>
+            <div class="col-md-6">
+                <ul class="footer-links">
+                    <li><a href="https://github.com/Rasmus2103/Wishlist" target="_blank">GitHub Repository</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</html>

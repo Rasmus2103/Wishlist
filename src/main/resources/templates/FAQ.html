@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{styles.css}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <title>FAQ</title>
+</head>
+
+<body>
+
+<form> <input type="button" value="back" onclick="history.back()"> </form>
+
+<div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <a href="/">
+                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+            </a>
+            <a class="index_hyperlink" th:href="@{index}">
+                <h1 class="fs-4"> Wishlist </h1>
+            </a>
+        </div>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a th:href="@{news}" class="nav-link">News</a></li>
+            <li class="nav-item"><a th:href="@{FAQ}" class="nav-link">FAQs</a></li>
+            <li class="nav-item"><a th:href="@{about}" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Login</a></li>
+        </ul>
+    </header>
+</div>
+
+
+<main>
+    <section class="faq-section">
+        <h2>Q: How do I create a wishlist?</h2>
+        <p>A: To create a wishlist, simply sign up for an account on our website, log in, and click on the "Create Wishlist" button. You can then add items to your wishlist by searching for them in our database or manually adding them using the "Add Item" feature. You can also customize your wishlist by setting a title, description, and cover image.</p>
+    </section>
+    <section class="faq-section">
+        <h2>Q: How can I share my wishlist with others?</h2>
+        <p>A: Once you've created a wishlist, you can share it with others by clicking on the "Share" button on your wishlist page. This will generate a unique link that you can send to your friends and family. You can also share your wishlist on social media platforms such as Facebook, Twitter, and Pinterest.</p>
+    </section>
+    <section class="faq-section">
+        <h2>Q: Can I add items from any online store to my wishlist?</h2>
+        <p>A: Yes, our wishlist web app supports adding items from any online store. You can either search for the item in our database and add it to your wishlist, or manually add the item by providing its name, image, and link. Our app will automatically generate a preview of the item with the image and link for easy access.</p>
+    </section>
+    <section class="faq-section">
+        <h2>Q: How can I mark an item as purchased?</h2>
+        <p>A: To mark an item as purchased, simply go to your wishlist page and click on the "Mark as Purchased" button next to the item. This will update the item status to "Purchased" and notify the wishlist owner that the item has been purchased. You can also add a personal note or leave a message for the wishlist owner when marking an item as purchased.</p>
+    </section>
+</main>
+
+</body>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p>© 2023 SmoothWishlist. All rights reserved.</p>
+            </div>
+            <div class="col-md-6">
+                <ul class="footer-links">
+                    <li><a href="https://github.com/Rasmus2103/Wishlist" target="_blank">GitHub Repository</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</html>

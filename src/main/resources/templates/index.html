@@ -1,29 +1,106 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="">
+<html lang="">
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/style.css}" rel="stylesheet">
+    <link th:href="@{styles.css}" rel="stylesheet">
     <title>Wishlist</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
 </head>
+
 <body>
 
-<div id="container">
-<h1>Velkommen til Wishlist</h1>
+<form> <input type="button" value="back" onclick="history.back()"> </form>
 
- <tr th:each="users: ${user}">
-    <td th:text="${users.name}"></td>
-     <td>
-         <a th:href="@{wishlist/wishes/{id}(id=${users.id})}">
-             <button type="button" class="btn btn-primary btn-sm">Wishes</button>
-         </a>
-     </td>
- </tr>
+<div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <a href="/">
+                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+            </a>
+            <a class="index_hyperlink" th:href="@{index}">
+                <h1 class="fs-4"> Wishlist </h1>
+            </a>
+        </div>
 
-<button>
-    <a href="/wishlist/register">register new user</a>
-</button>
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a th:href="@{news}" class="nav-link">News</a></li>
+            <li class="nav-item"><a th:href="@{FAQ}" class="nav-link">FAQs</a></li>
+            <li class="nav-item"><a th:href="@{about}" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Login</a></li>
+        </ul>
+    </header>
 </div>
 
+<main class="main_index">
+    <div class="slider-container">
+        <div class="slider-wrapper">
+            <!-- Slide 1 -->
+            <div class="slider-item">
+                <img src="https://media.istockphoto.com/id/1214035067/photo/flat-layout-of-workplace-on-blue-background.jpg?s=170667a&w=0&k=20&c=HQW1tOQTz1CEA5pFn_ySrXMfdMC7_1n7Acu1P_TKWOw=" alt="Sheep 1">
+            </div>
+            <!-- Slide 2 -->
+            <div class="slider-item">
+                <img src="https://thumbs.dreamstime.com/b/excited-people-group-happy-cheerful-smiling-friends-offer-their-hands-down-to-camera-clear-blue-sky-background-164282014.jpg" alt="Sheep 2">
+            </div>
+            <!-- Slide 3 -->
+            <div class="slider-item">
+                <img src="https://t3.ftcdn.net/jpg/02/85/40/12/360_F_285401217_dv35YVIXgkyccVHdBPB78DB42m66GnYj.jpg" alt="Sheep 3">
+            </div>
+        </div>
+        <div class="prev">&#10094;</div>
+        <div class="next">&#10095;</div>
+    </div>
+
+    <div class="intro-container">
+        <div class="container">
+            <h1>Welcome to Your Wishlist Web App</h1>
+            <p>Create, customize, and share your wishlists with friends and family! Our easy-to-use web app allows you to create multiple wishlists, add and edit wishes, and much more. Get started now and never forget a wish again!</p>
+        </div>
+    </div>
+
+    <section class="features-section">
+        <div class="feature-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png" alt="Multiple Wishlists">
+            <h2>Create Multiple Wishlists</h2>
+            <p>Create and manage multiple wishlists for different occasions, such as birthdays, holidays, weddings, and more. Keep your wishes organized and easily accessible.</p>
+        </div>
+        <div class="feature-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png" alt="Add and Edit Wishes">
+            <h2>Add and Edit Wishes</h2>
+            <p>Add your desired items to your wishlists with just a few clicks. Edit and update your wishes anytime to keep your lists up-to-date and reflect your latest preferences.</p>
+        </div>
+        <div class="feature-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png" alt="Share Wishlist">
+            <h2>Share with Friends</h2>
+            <p>Share your wishlists with your friends and family through social media, email, or direct link. Let others know what you're wishing for and make it easy for them to find the perfect gift.</p>
+        </div>
+        <div class="feature-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png" alt="Reminders">
+            <h2>Set Reminders</h2>
+            <p>Never miss an important event or occasion. Set reminders for upcoming birthdays, anniversaries, or other special occasions, so you can be prepared and stay organized.</p>
+        </div>
+    </section>
+</main>
+
 </body>
+
+<script th:src="@{/scripts/script.js}"></script>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p>© 2023 SmoothWishlist. All rights reserved.</p>
+            </div>
+            <div class="col-md-6">
+                <ul class="footer-links">
+                    <li><a href="https://github.com/Rasmus2103/Wishlist" target="_blank">GitHub Repository</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
 </html>
