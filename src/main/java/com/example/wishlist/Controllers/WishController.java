@@ -78,7 +78,7 @@ public class WishController {
         repositoryDB.addWishToWishlist(wish, wishlistid);
         return "redirect:/wishlist";
     }
-
+/*
     @PostMapping("wishes/{userid}/add")
     //public String addWishList(@PathVariable("userid") int userid, @ModelAttribute("wishlistDTO") WishlistDTO wishlistDTO) {
         public String addWishList(@PathVariable("userid") int userid, @ModelAttribute("wishlistDTO") WishlistDTO wishlistDTO, Integer wishlistID, String wishlistName){
@@ -90,6 +90,7 @@ public class WishController {
         return addWishListToUser(userid, wishlistDTO.getUserId());
         // repositoryDB.addWishListToUser(userid, wishlistID);
     }
+    */
 
     @PostMapping("wishes/{userid}/adduser")
     public String addWishListToUser(@PathVariable("userid") int userid, Integer wishlistID) {

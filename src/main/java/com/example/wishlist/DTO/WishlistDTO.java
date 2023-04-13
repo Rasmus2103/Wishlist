@@ -3,7 +3,7 @@ import com.example.wishlist.Models.Wish;
 
 import java.util.List;
 
-public class WishlistDTO extends UserDTO {
+public class WishlistDTO {
 
     private String name;
     private int wishlistid;

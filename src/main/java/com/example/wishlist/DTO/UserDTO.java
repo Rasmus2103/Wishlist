@@ -1,7 +1,9 @@
 package com.example.wishlist.DTO;
+import com.example.wishlist.Models.Wish;
+
 import java.util.List;
 
-public class UserDTO {
+public class UserDTO extends Wish {
 
     private int userid;
     private String name;
