@@ -225,12 +225,7 @@ public class RepositoryDB implements IRepositoryDB {
                 wishlistId = rs.getInt("wishlistid");
             }
 
-            SQL = "DELETE FROM wishlistwish WHERE wishlistid = ?";
-            ps = connection().prepareStatement(SQL);
-            ps.setInt(1, wishlistId);
-            ps.executeUpdate();
-
-            SQL = "DELETE FROM userwishlist WHERE wishlistid = ?";
+            SQL = "DELETE FROM wish WHERE wishlistid = ?";
             ps = connection().prepareStatement(SQL);
             ps.setInt(1, wishlistId);
             ps.executeUpdate();
@@ -254,16 +249,10 @@ public class RepositoryDB implements IRepositoryDB {
            if (rs.next()) {
                wishId = rs.getInt("wishid");
            }
-           SQL = "DELETE FROM wishlistwish WHERE wishid = ?";
-           ps = connection().prepareStatement(SQL);
-           ps.setInt(1, wishId);
-           ps.executeUpdate();
-
            SQL = "DELETE FROM wish WHERE wishid = ?";
            ps = connection().prepareStatement(SQL);
            ps.setInt(1, wishId);
            ps.executeUpdate();
-
        } catch (SQLException e) {
            System.out.println(e.getMessage());
            throw new RuntimeException(e);
