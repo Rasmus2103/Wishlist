@@ -29,6 +29,21 @@ public class WishController {
         return "index";
     }
 
+    @GetMapping("news")
+    public String getNews() {
+        return "news";
+    }
+
+    @GetMapping("FAQ")
+    public String getFAQ() {
+        return "FAQ";
+    }
+
+    @GetMapping("about")
+    public String getAbout() {
+        return "about";
+    }
+
     @GetMapping("wishes/{id}")
     public String getWishes(@PathVariable("id") int userid, Model model) {
         User user = repositoryDB.getUser(userid);
