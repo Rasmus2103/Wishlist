@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
     <link th:href="@{/styles.css}" rel="stylesheet">
+    <title>Login</title>
 </head>
 <body>
 <div class="main">
@@ -14,6 +15,7 @@
             <input type="password" id="password" name="password" th:name="password"><br> <!-- Use Thymeleaf to set the name attribute -->
             <input type="submit" value="Login">
     </form>
+    <a href="wishlist/register"> if you don't already have a user, click here</a>
 </div>
 </body>
 </html>
