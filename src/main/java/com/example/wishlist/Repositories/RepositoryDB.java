@@ -6,7 +6,6 @@ import com.example.wishlist.Models.User;
 import com.example.wishlist.Models.Wish;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +22,44 @@ public class RepositoryDB implements IRepositoryDB {
     @Value("${spring.datasource.password}")
     private String pwd;
 
-    /*private String SQL;
-    private Statement stmt;
-    private ResultSet rs;
-    private PreparedStatement ps;
-    private Connection con;*/
-
     public Connection connection() {
         try {
             Connection con = DriverManager.getConnection(db_url,uid,pwd);
             return con;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    public User getUser(int userid) {
+        User user = null;
+        try {
+            String SQL = "SELECT * FROM user WHERE userid = ?";
+            PreparedStatement ps = connection().prepareStatement(SQL);
+            ps.setInt(1, userid);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                String id = rs.getString("userid");
+                String name = rs.getString("name");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                user = new User(id, name, username, password);
+            }
+            return user;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getUserid(String username) {
+        try {
+            String SQL = "select userid from user where username = ?";
+            PreparedStatement ps = connection().prepareStatement(SQL);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            return rs.getInt("userid");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
@@ -59,44 +86,45 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
-    public WishlistDTO findWishlistById(int wishlistId) {
-        WishlistDTO wishlistDTO = null;
-        try {
-            String SQL = "SELECT wishname, description, url, price, wishlistname FROM wish w \n" +
-                    "JOIN wishlistwish ww ON w.wishid = ww.wishid \n" +
-                    "JOIN wishlist wl ON wl.wishlistid = w.wishid WHERE wishlistid = ?";
-            PreparedStatement ps = connection().prepareStatement(SQL);
-            ps.setInt(1, wishlistId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                int wishlistid = rs.getInt("wishlistid");
-                String wishlistName = rs.getString("wishlistname");
-                List<String> wishes = getWishes();
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
-        }
-        return wishlistDTO;
-    }
-
     public List<WishlistDTO> getWishlists(int userId) {
         List<WishlistDTO> wishlists = new ArrayList<>();
         try {
-            String SQL = "SELECT wishlistname, name FROM wishlist w \n" +
-                    "JOIN userwishlist uw ON w.wishlistid = uw.wishlistid\n" +
-                    "JOIN user u ON u.userid = w.wishlistid WHERE u.userid = ?;";
+            String SQL = "SELECT wishlistname, wishlistid FROM wishlist WHERE userid = ?;";
             PreparedStatement ps = connection().prepareStatement(SQL);
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 String name = rs.getString("wishlistname");
-                wishlists.add(new WishlistDTO(name));
+                int wishlistid = rs.getInt("wishlistid");
+                wishlists.add(new WishlistDTO(name, wishlistid));
             }
             return wishlists;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
+        }
+    }
+
+    public List<Wish> getWishes(int userId) {
+        List<Wish> wishes = new ArrayList<>();
+        try {
+            String SQL = "SELECT wishname, description, url, price FROM Wish\n" +
+                    "JOIN Wishlist ON Wish.wishlistid = Wishlist.wishlistid\n" +
+                    "WHERE Wishlist.userid = ?;";
+            PreparedStatement ps = connection().prepareStatement(SQL);
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                String wish = rs.getString("wishname");
+                String desription = rs.getString("description");
+                String url = rs.getString("url");
+                String price = rs.getString("price");
+                wishes.add(new Wish(wish, desription, url, price));
+            }
+            return wishes;
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
         }
     }
 
@@ -157,55 +185,31 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
-    public void addWishListToUser(int userid, int wishlistID){
+    public void addWishToWishlist(Wish wish, int wishlistid) {
         try {
-            String SQL = "INSERT INTO userwishlist (userid, wishlistID) VALUES (?, ?)";
-            PreparedStatement ps = connection().prepareStatement(SQL);
-            ps.setInt(1, userid);
-            ps.setInt(2, wishlistID);
+            String SQL = "INSERT INTO wish (wishname, description, url, price, wishlistid) VALUES (?, ?, ?, ?,?)";
+            PreparedStatement ps = connection().prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, wish.getName());
+            ps.setString(2, wish.getDescription());
+            ps.setString(3, wish.getUrl());
+            ps.setString(4, wish.getPrice());
+            ps.setInt(5, wishlistid);
             ps.executeUpdate();
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }
+
     public void addWishlist(int userid, String wishlistName){
         try{
-            String SQL = "INSERT INTO wishlist (wishlistName) VALUES (?)";
+            String SQL = "INSERT INTO wishlist (wishlistName, userid) VALUES (?,?)";
             PreparedStatement ps = connection().prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, wishlistName);
+            ps.setInt(2, userid);
             ps.executeUpdate();
-            ResultSet rs = ps.getGeneratedKeys();
-            int wishlistID = 0;
-            if(rs.next()){
-                wishlistID = rs.getInt(1);
-                System.out.println(wishlistID);
-            }
-            String SQL2 = "INSERT INTO userwishlist (userid, wishlistID) VALUES (?, ?)";
-            PreparedStatement ps2 = connection().prepareStatement(SQL2);
-            ps2.setInt(1, userid);
-            ps2.setInt(2, wishlistID);
-            ps2.executeUpdate();
         }
         catch (SQLException e){
-            System.out.println(e.getMessage());
-            throw new RuntimeException();
-        }
-    }
-
-    public List<String> getWishes() {
-        List<String> wishes = new ArrayList<>();
-        try {
-            String SQL = "SELECT wishname FROM wish";
-            Statement stmt = connection().createStatement();
-            ResultSet rs = stmt.executeQuery(SQL);
-            while(rs.next()) {
-                String wish = rs.getString("wishname");
-                wishes.add(wish);
-            }
-            return wishes;
-        } catch (SQLException e){
             System.out.println(e.getMessage());
             throw new RuntimeException();
         }
@@ -221,12 +225,7 @@ public class RepositoryDB implements IRepositoryDB {
                 wishlistId = rs.getInt("wishlistid");
             }
 
-            SQL = "DELETE FROM wishlistwish WHERE wishlistid = ?";
-            ps = connection().prepareStatement(SQL);
-            ps.setInt(1, wishlistId);
-            ps.executeUpdate();
-
-            SQL = "DELETE FROM userwishlist WHERE wishlistid = ?";
+            SQL = "DELETE FROM wish WHERE wishlistid = ?";
             ps = connection().prepareStatement(SQL);
             ps.setInt(1, wishlistId);
             ps.executeUpdate();
@@ -241,164 +240,24 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
-    /*public WishlistDTO getWishListById(int id) {
-        WishlistDTO wishlistDTO = null;
-        try {
-            SQL = "SELECT wishlistname FROM wishlist " +
-                    "JOIN wishlistwish ON Wishlist.wishlistid = wishlistwish.wishlistid" +
-                    "JOIN Wish ON wishlistwish.wishid = Wish.wishid" +
-                    "WHERE ";
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
-
-
-    //CREATE Superhero
-    /*public void addSuperhero(SuperHeroForm form) {
-        try {
-            // ID's
-            int cityId = 0;
-            int heroId = 0;
-            List<Integer> powerIDs = new ArrayList<>();
-            // find city_id
-            String SQL1 = "select id from city where cityname = ?";
-            PreparedStatement pstmt = connection().prepareStatement(SQL1);
-            pstmt.setString(1, form.getCity());
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                cityId = rs.getInt("id");
-            }
-            // insert row in superhero table
-            String SQL2 = "insert into superhero (heroname, realname, creationyear, cityid) " +
-                    "values(?, ?, ?, ?)";
-            pstmt = connection().prepareStatement(SQL2, Statement.RETURN_GENERATED_KEYS); // return autoincremented key
-            pstmt.setString(1, form.getHeroName());
-            pstmt.setString(2, form.getRealName());
-            pstmt.setInt(3, form.getCreationYear());
-            pstmt.setInt(4, cityId);
-            int rows = pstmt.executeUpdate();
-            rs = pstmt.getGeneratedKeys();
-            if (rs.next()) {
-                heroId = rs.getInt(1);
-            }
-            // find power_ids
-            String SQL3 = "select id from superpower where powername = ?;";
-            pstmt = connection().prepareStatement(SQL3);
-            for (String power : form.getPowerList()) {
-                pstmt.setString(1, power);
-                rs = pstmt.executeQuery();
-                if (rs.next()) {
-                    powerIDs.add(rs.getInt("id"));
-                }
-            }
-            // insert entries in superhero_powers join table
-            String SQL4 = "insert into superheropower values (?,?);";
-            pstmt = connection().prepareStatement(SQL4);
-            for (int i = 0; i < powerIDs.size(); i++) {
-                pstmt.setInt(1, heroId);
-                pstmt.setInt(2, powerIDs.get(i));
-                rows = pstmt.executeUpdate();
-            }
-        } catch(SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void deleteWish(int wishId) {
+       try {
+           String SQL = "SELECT wishid FROM wish WHERE wishid = ?";
+           PreparedStatement ps = connection().prepareStatement(SQL);
+           ps.setInt(1, wishId);
+           ResultSet rs = ps.executeQuery();
+           if (rs.next()) {
+               wishId = rs.getInt("wishid");
+           }
+           SQL = "DELETE FROM wish WHERE wishid = ?";
+           ps = connection().prepareStatement(SQL);
+           ps.setInt(1, wishId);
+           ps.executeUpdate();
+       } catch (SQLException e) {
+           System.out.println(e.getMessage());
+           throw new RuntimeException(e);
+       }
     }
-    //UPDATE Superhero
-    public void updateHero(int id, SuperHeroForm form) {
-        try {
-            String cityQuery = "SELECT id FROM city WHERE cityname = ?";
-            PreparedStatement cityPs = connect().prepareStatement(cityQuery);
-            cityPs.setString(1, form.getCity());
-            ResultSet cityRs = cityPs.executeQuery();
-            int cityId = 0;
-            if (cityRs.next()) {
-                cityId = cityRs.getInt("id");
-            }
-            cityRs.close();
-            cityPs.close();
-            // Then, update the superhero using the fetched cityid
-            String SQL = "UPDATE superhero SET heroname = ?, realname = ?, creationyear = ?, cityid = ? WHERE id = ?";
-            PreparedStatement ps = connect().prepareStatement(SQL);
-            ps.setString(1, form.getHeroName());
-            ps.setString(2, form.getRealName());
-            ps.setInt(3, form.getCreationYear());
-            ps.setInt(4, cityId);
-            ps.setInt(5, id);
-            ps.executeUpdate();
-        } catch(SQLException e) {
-            throw new RuntimeException(e);
-        }
-        deleteSuperheroPowers(id);
-        addSuperheroPowers(id, form.getPowerList());
-    }
-    public void deleteSuperheroPowers(int heroId) {
-        try {
-            SQL = "DELETE FROM superheropower WHERE superheroid = ?";
-            ps = connect().prepareStatement(SQL);
-            ps.setInt(1, heroId);
-            ps.executeUpdate();
-            ps.close();
-            connect().close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public void addSuperheroPowers(int heroId, List<String> powers) {
-        PreparedStatement localPs;
-        try {
-            String SQL = "INSERT INTO superheropower (superheroid, superpowerid) VALUES (?, ?)";
-            localPs = connect().prepareStatement(SQL);
-            for (String powerName : powers) {
-                int powerId = getPowerId(powerName);
-                localPs.setInt(1, heroId);
-                localPs.setInt(2, powerId);
-                localPs.addBatch();
-            }
-            localPs.executeBatch();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public int getPowerId(String powerName) {
-        int powerId = 0;
-        String SQL = "SELECT id FROM superpower WHERE powername = ?";
-        try (Connection connection = connect();
-             PreparedStatement ps = connection.prepareStatement(SQL)) {
-            ps.setString(1, powerName);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    powerId = rs.getInt("id");
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return powerId;
-    }
-    //DELETE Superhero
-    public void deleteHero(int heroId) {
-        try {
-            SQL = "SELECT id FROM superhero WHERE id = ?";
-            ps = connect().prepareStatement(SQL);
-            ps.setInt(1, heroId);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                heroId = rs.getInt("id");
-            }
-            SQL = "DELETE FROM superheropower WHERE superheroid = ?";
-            ps = connect().prepareStatement(SQL);
-            ps.setInt(1, heroId);
-            ps.executeUpdate();
-            SQL = "DELETE FROM superhero WHERE id = ?";
-            ps = connect().prepareStatement(SQL);
-            ps.setInt(1, heroId);
-            ps.executeUpdate();
-        } catch(SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-*/
 
 
 }
