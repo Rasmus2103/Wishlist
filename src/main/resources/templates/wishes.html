@@ -34,11 +34,11 @@
         <tbody>
         <tr th:each="wishlist: ${wishlists}">
             <td th:text="${wishlist.name}"></td>
+
             <td>
-                <a th:href="@{'/wishlist/wishes/slet/' + ${wishlist.getWishlistid()} + '/' + ${user.getId()}  }">delete wishlist </a> <!--  onclick="return confirm('Er du sikker?') -->
+                <a th:href="@{'/wishlist/wishes/slet/' + ${wishlist.getWishlistid()} + '/' + ${user.getId()}  }">delete wishlist </a>
                 <a th:href="@{'/wishlist/addwish/' + ${wishlist.getWishlistid()} + '/' + ${user.getId()}}">add wish </a>
             </td>
-
         <tr th:each="wishes: ${wishes}">
             <td th:text="${wishes.name}"></td>
             <td th:text="${wishes.description}"></td>
@@ -48,8 +48,8 @@
                 <a th:href="@{'/wishlist/wishes/sletwish/' + ${wishes.wishId} + '/' + ${user.getId()}}">delete wish </a>
             </td>
         </tr>
-
         </tr>
+
         </tbody>
 
     </table>
