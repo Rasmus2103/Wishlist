@@ -34,6 +34,8 @@
 
         <form> <input type="button" value="back" onclick="history.back()"></form>
         </tbody>
+
+        <a th:href="@{/wishlist/logout}">Logout</a>
     </table>
     <a th:href="@{/wishlist/wishes/{userid}/createwishlist(userid=${user.id})}">add wishlist</a>
 </div>
