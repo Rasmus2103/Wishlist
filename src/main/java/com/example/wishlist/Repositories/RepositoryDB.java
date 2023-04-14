@@ -1,6 +1,5 @@
 package com.example.wishlist.Repositories;
 
-import com.example.wishlist.DTO.UserDTO;
 import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Models.User;
 import com.example.wishlist.Models.Wish;
@@ -112,18 +111,19 @@ public class RepositoryDB implements IRepositoryDB {
     public List<Wish> getWishes(int userId) {
         List<Wish> wishes = new ArrayList<>();
         try {
-            String SQL = "SELECT wishname, description, url, price FROM Wish\n" +
+            String SQL = "SELECT wishid, wishname, description, url, price FROM Wish\n" +
                     "JOIN Wishlist ON Wish.wishlistid = Wishlist.wishlistid\n" +
                     "WHERE Wishlist.userid = ?;";
             PreparedStatement ps = connection().prepareStatement(SQL);
             ps.setInt(1, userId);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
+                int wishid = rs.getInt("wishid");
                 String wish = rs.getString("wishname");
                 String desription = rs.getString("description");
                 String url = rs.getString("url");
                 String price = rs.getString("price");
-                wishes.add(new Wish(wish, desription, url, price));
+                wishes.add(new Wish(wishid ,wish, desription, url, price));
             }
             return wishes;
         } catch (SQLException e){
@@ -140,49 +140,6 @@ public class RepositoryDB implements IRepositoryDB {
             ps.setString(2, user.getUsername());
             ps.setString(3, user.getPassword());
             ps.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
-
-    public UserDTO userDTOByID (int userid) {
-        UserDTO userDTO = new UserDTO();
-        List<WishlistDTO> wishListList = new ArrayList<>();
-        try {
-            String SQL = "SELECT name, username, password, wishlistname, wishname, description, url, price " +
-                    "FROM user u " +
-                    "JOIN userwishlist uw ON u.userid = uw.userid " +
-                    "JOIN wishlist wl ON wl.wishlistid = uw.wishlistid " +
-                    "JOIN wishlistwish ww ON ww.wishlistid = wl.wishlistid " +
-                    "JOIN wish w ON w.wishid = ww.wishid " +
-                    "WHERE u.userid = ?";
-            PreparedStatement ps = connection().prepareStatement(SQL);
-            ps.setInt(1, userid);
-            ResultSet rs = ps.executeQuery();
-            String currentWishlist = "";
-            WishlistDTO wishlistDTO;
-            List<Wish> wishes = null;
-            while (rs.next()) {
-                String name = rs.getString("name");
-                String password = rs.getString("password");
-                String userusername = rs.getString("username");
-                String wishlistname = rs.getString("wishlistname");
-                String wishname = rs.getString("wishname");
-                String description = rs.getString("description");
-                String url = rs.getString("url");
-                String price = rs.getString("price");
-                if (wishlistname.equals(currentWishlist)){
-                    wishes.add(new Wish(wishname, description, url, price));
-                } else {
-                    wishes = new ArrayList<>(List.of(new Wish(wishname, description, url, price)));
-                    wishlistDTO = new WishlistDTO(wishlistname, wishes);
-                    wishListList.add(wishlistDTO);
-                    userDTO = new UserDTO(userid, name, userusername, password, null);
-                    currentWishlist = wishlistname;
-                }
-            }
-            return userDTO;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
