@@ -112,4 +112,20 @@ public class WishController {
         model.addAttribute("wishes", repositoryDB.getWishlists(wishId));
         return "redirect:/wishlist";
     }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestParam String username, @RequestParam String password, Model model) {
+        User user = repositoryDB.getUser(repositoryDB.getUserid(username));
+        if (user != null && user.getPassword().equals(password)) {
+            return "wishes";
+        } else {
+            return "error";
+        }
+    }
+
 }

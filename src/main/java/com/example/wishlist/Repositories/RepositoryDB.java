@@ -174,7 +174,7 @@ public class RepositoryDB implements IRepositoryDB {
                     wishes = new ArrayList<>(List.of(new Wish(wishname, description, url, price)));
                     wishlistDTO = new WishlistDTO(wishlistname, wishes);
                     wishListList.add(wishlistDTO);
-                    userDTO = new UserDTO(userid, name, userusername, password, wishListList);
+                    userDTO = new UserDTO(userid, name, userusername, password, null);
                     currentWishlist = wishlistname;
                 }
             }

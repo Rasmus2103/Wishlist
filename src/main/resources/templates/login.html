@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <title>Login</title>
+    <link th:href="@{/styles.css}" rel="stylesheet">
+</head>
+<body>
+<div class="main">
+    <h1>Login</h1>
+    <form action="/login" method="post" th:action="@{/login}">
+        <label for="username">Username:</label>
+            <input type="text" id="username" name="username" th:name="username"><br> <!-- Use Thymeleaf to set the name attribute -->
+        <label for="password">Password:</label>
+            <input type="password" id="password" name="password" th:name="password"><br> <!-- Use Thymeleaf to set the name attribute -->
+            <input type="submit" value="Login">
+    </form>
+</div>
+</body>
+</html>
