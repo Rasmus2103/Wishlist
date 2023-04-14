@@ -7,6 +7,7 @@ public class Wish {
     private String description;
     private String url;
     private String price;
+    private int wishlistid;
 
     public Wish(String name, String description, String url, String price) {
         this.name = name;
@@ -23,6 +24,10 @@ public class Wish {
         this.price = price;
     }
 
+    public Wish(int wishlistid) {
+        this.wishlistid = wishlistid;
+    }
+
     public Wish() {
 
     }
@@ -33,6 +38,14 @@ public class Wish {
 
     public void setWishId(int wishId) {
         this.wishId = wishId;
+    }
+
+    public int getWishlistid() {
+        return wishlistid;
+    }
+
+    public void setWishlistid(int wishlistid) {
+        this.wishlistid = wishlistid;
     }
 
     public String getName() {

@@ -12,25 +12,25 @@
     <h1>add wish</h1>
     <form> <input type="button" value="back" onclick="history.back()"> </form>
 
-    <form action="/wishlist/addwish/" method="post" th:object="${wishes}">
+    <form action="#" th:action="@{/wishlist/addwish/{wishlistid}(wishlistid=${wishlistid})}" method="post" th:object="${wishes}">
 
         <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">name</label>
+            <label for="exampleFormControlInput1" class="form-label">Name</label>
             <input type="text" class="form-control" placeholder="name" th:field="*{name}">
         </div>
 
         <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Username</label>
+            <label for="exampleFormControlInput1" class="form-label">Description</label>
             <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Username" th:field="*{description}">
         </div>
 
         <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Username</label>
+            <label for="exampleFormControlInput1" class="form-label">Link Adresse</label>
             <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="Username" th:field="*{url}">
         </div>
 
         <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Username</label>
+            <label for="exampleFormControlInput1" class="form-label">Price</label>
             <input type="text" class="form-control" id="exampleFormControlInput3" placeholder="Username" th:field="*{price}">
         </div>
 

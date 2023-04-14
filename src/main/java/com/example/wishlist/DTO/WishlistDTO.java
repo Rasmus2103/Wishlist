@@ -8,6 +8,7 @@ public class WishlistDTO {
     private String name;
     private int wishlistid;
     private List<Wish> wishes;
+    private int userid;
 
     public WishlistDTO(String name, int wishlistid) {
         this.name = name;
@@ -25,6 +26,17 @@ public class WishlistDTO {
         this.wishes = wishes;
     }
 
+    public WishlistDTO(int userid) {
+        this.userid = userid;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
 
     public WishlistDTO() {
 
