@@ -15,13 +15,11 @@
         <tbody>
         <tr th:each="wishlist: ${wishlists}">
             <td th:text="${wishlist.name}"></td>
-            <td th:text="${wishlist.getWishlistid()}"></td>
             <td>
                 <a th:href="@{/wishlist/wishes/slet/{wishlistid}(wishlistid=${wishlist.getWishlistid()})}" onclick="return confirm('Er du sikker?')">Slet</a>
                 <a th:href="@{/wishlist/addwish/{wishlistid}(wishlistid=${wishlist.getWishlistid()})}">add wish to wishlist</a>
             </td>
 
-        </tr>
         <tr th:each="wishes: ${wishes}">
             <td th:text="${wishes.name}"></td>
             <td th:text="${wishes.description}"></td>
@@ -32,7 +30,9 @@
             </td>
         </tr>
 
-            <form> <input type="button" value="back" onclick="history.back()"></form>
+        </tr>
+
+        <form> <input type="button" value="back" onclick="history.back()"></form>
         </tbody>
     </table>
     <a th:href="@{/wishlist/wishes/{userid}/createwishlist(userid=${user.id})}">add wishlist</a>
