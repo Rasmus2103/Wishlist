@@ -1,4 +1,5 @@
 package com.example.wishlist.Controllers;
+
 import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Models.User;
 import com.example.wishlist.Models.Wish;
