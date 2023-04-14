@@ -54,12 +54,16 @@ public class RepositoryDB implements IRepositoryDB {
     }
 
     public int getUserid(String username) {
+        int userId = 0;
         try {
             String SQL = "select userid from user where username = ?";
             PreparedStatement ps = connection().prepareStatement(SQL);
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
-            return rs.getInt("userid");
+            if (rs.next()) {
+                userId = rs.getInt("userid");
+            }
+            return userId;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);

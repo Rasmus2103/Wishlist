@@ -5,6 +5,7 @@ import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Models.User;
 import com.example.wishlist.Models.Wish;
 import com.example.wishlist.Repositories.IRepositoryDB;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,11 @@ public class WishController {
 
     public WishController(ApplicationContext context, @Value("wishlist_DB") String impl) {
         repositoryDB =(IRepositoryDB) context.getBean(impl);
+    }
+
+    private boolean isLogged(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        return user != null;
     }
 
     @GetMapping("")
@@ -45,7 +51,7 @@ public class WishController {
     }
 
     @GetMapping("wishes/{id}")
-    public String getWishes(@PathVariable("id") int userid, Model model) {
+    public String getWishes(@PathVariable("id") int userid, Model model, HttpSession session) {
         User user = repositoryDB.getUser(userid);
         model.addAttribute("user", user);
 
@@ -54,7 +60,7 @@ public class WishController {
 
         List<Wish> wishes = repositoryDB.getWishes(userid);
         model.addAttribute("wishes", wishes);
-        return "wishes";
+        return isLogged(session) ? "wishes" : "login";
     }
 
     @GetMapping("register")
@@ -113,16 +119,17 @@ public class WishController {
         return "redirect:/wishlist";
     }
 
-    @GetMapping("/login")
+    @GetMapping("login")
     public String login() {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password, Model model) {
+    @PostMapping("login")
+    public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session) {
         User user = repositoryDB.getUser(repositoryDB.getUserid(username));
         if (user != null && user.getPassword().equals(password)) {
-            return "wishes";
+            session.setAttribute("user", user);
+            return "redirect:/wishlist/wishes/" + user.getId();
         } else {
             return "error";
         }
