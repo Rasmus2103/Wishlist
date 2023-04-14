@@ -113,12 +113,12 @@ public class WishController {
         return "redirect:/wishlist";
     }
 
-    @GetMapping("/login")
+    @GetMapping("login")
     public String login() {
         return "login";
     }
 
-    @PostMapping("/login")
+    @PostMapping("login")
     public String login(@RequestParam String username, @RequestParam String password, Model model) {
         User user = repositoryDB.getUser(repositoryDB.getUserid(username));
         if (user != null && user.getPassword().equals(password)) {
