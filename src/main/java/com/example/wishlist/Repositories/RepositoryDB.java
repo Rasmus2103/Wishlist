@@ -123,7 +123,7 @@ public class RepositoryDB implements IRepositoryDB {
                 String desription = rs.getString("description");
                 String url = rs.getString("url");
                 String price = rs.getString("price");
-                wishes.add(new Wish(wishid ,wish, desription, url, price));
+                wishes.add(new Wish(wishid ,wish, desription, url, price, userId));
             }
             return wishes;
         } catch (SQLException e){

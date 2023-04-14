@@ -7,17 +7,36 @@
     <title>Wishes</title>
 </head>
 <body>
+
+<div class="main">
+
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <a href="/">
+                    <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                </a>
+                    <h1 class="fs-4"> Wishlist </h1>
+            </div>
+
+            <ul class="nav nav-pills">
+                <li class="nav-item">  <a th:href="@{/wishlist/logout}" class="nav-link">Logout</a></li>
+            </ul>
+        </header>
+    </div>
+
 <div id="container">
 
-    <h1>Wishes:</h1>
-    <h1 th:text="${user.name}">name</h1>
+
+    <h1  th:if="${user != null}" th:text="${user.getName()} + 's ' + 'wishslits' "></h1>
+
     <table>
         <tbody>
         <tr th:each="wishlist: ${wishlists}">
             <td th:text="${wishlist.name}"></td>
             <td>
-                <a th:href="@{/wishlist/wishes/slet/{wishlistid}(wishlistid=${wishlist.getWishlistid()})}" onclick="return confirm('Er du sikker?')">Slet</a>
-                <a th:href="@{/wishlist/addwish/{wishlistid}(wishlistid=${wishlist.getWishlistid()})}">add wish to wishlist</a>
+                <a th:href="@{'/wishlist/wishes/slet/' + ${wishlist.getWishlistid()} + '/' + ${user.getId()}  }">delete wishlist </a> <!--  onclick="return confirm('Er du sikker?') -->
+                <a th:href="@{'/wishlist/addwish/' + ${wishlist.getWishlistid()} + '/' + ${user.getId()}}">add wish </a>
             </td>
 
         <tr th:each="wishes: ${wishes}">
@@ -26,18 +45,15 @@
             <td th:text="${wishes.url}"></td>
             <td th:text="${wishes.price}"></td>
             <td>
-                <a th:href="@{/wishlist/wishes/sletwish/{wishid}(wishid=${wishes.wishId})}" onclick="return confirm('Er du sikker?')">Slet</a>
+                <a th:href="@{'/wishlist/wishes/sletwish/' + ${wishes.wishId} + '/' + ${user.getId()}}">delete wish </a>
             </td>
         </tr>
 
         </tr>
-
-        <form> <input type="button" value="back" onclick="history.back()"></form>
         </tbody>
 
-        <a th:href="@{/wishlist/logout}">Logout</a>
     </table>
-    <a th:href="@{/wishlist/wishes/{userid}/createwishlist(userid=${user.id})}">add wishlist</a>
+    <a th:href="@{/wishlist/wishes/{userid}/createwishlist(userid=${user.id})}">add wishlist </a>
 </div>
 </body>
 </html>

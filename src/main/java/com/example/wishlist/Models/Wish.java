@@ -8,6 +8,7 @@ public class Wish {
     private String url;
     private String price;
     private int wishlistid;
+    private int userid;
 
     public Wish(String name, String description, String url, String price) {
         this.name = name;
@@ -28,8 +29,31 @@ public class Wish {
         this.wishlistid = wishlistid;
     }
 
+    public Wish(int wishlistid, int userid) {
+        this.wishlistid = wishlistid;
+        this.userid = userid;
+    }
+
+    public Wish(int wishId, String name, String description, String url, String price, int userid) {
+        this.wishId = wishId;
+        this.name = name;
+        this.description = description;
+        this.url = url;
+        this.price = price;
+        this.userid = userid;
+    }
+
+
     public Wish() {
 
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
     }
 
     public int getWishId() {
