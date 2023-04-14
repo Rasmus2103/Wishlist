@@ -134,4 +134,11 @@ public class WishController {
         return "login";
     }
 
+    @GetMapping("logout")
+    public String logout(HttpSession session) {
+        // invalidate session and return landing page
+        session.invalidate();
+        return "redirect:/wishlist";
+    }
+
 }
