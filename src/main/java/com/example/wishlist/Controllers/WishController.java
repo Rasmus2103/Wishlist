@@ -1,6 +1,5 @@
 package com.example.wishlist.Controllers;
 
-import com.example.wishlist.DTO.UserDTO;
 import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Models.User;
 import com.example.wishlist.Models.Wish;
@@ -102,14 +101,14 @@ public class WishController {
     @GetMapping("wishes/slet/{wishlistid}")
     public String deleteWishlist(@PathVariable("wishlistid") int wishlistId, Model model) {
         repositoryDB.deleteWishlist(wishlistId);
-        model.addAttribute("wishlist", repositoryDB.getWishlists(wishlistId));
+        //model.addAttribute("wishlist", repositoryDB.getWishlists(wishlistId));
         return "redirect:/wishlist";
     }
 
     @GetMapping("wishes/sletwish/{wishid}")
-    public String deleteWish(@PathVariable("wishid") int wishId, Model model){
-        repositoryDB.deleteWish(wishId);
-        model.addAttribute("wishes", repositoryDB.getWishlists(wishId));
+    public String deleteWish(@PathVariable("wishid") int wishid, Model model){
+        repositoryDB.deleteWish(wishid);
+        //model.addAttribute("wishes", repositoryDB.getWishlists(wishid));
         return "redirect:/wishlist";
     }
 
