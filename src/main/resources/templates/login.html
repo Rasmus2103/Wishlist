@@ -9,6 +9,7 @@
 <div class="main">
     <h1>Login</h1>
     <form action="#" th:action="@{/wishlist/login}" method="post">
+        <p th:if="${wrongCredentials}" class="error">Forkert username eller password</p>
         <label for="username">Username:</label>
             <input type="text" id="username" name="username" th:name="username"><br> <!-- Use Thymeleaf to set the name attribute -->
         <label for="password">Password:</label>

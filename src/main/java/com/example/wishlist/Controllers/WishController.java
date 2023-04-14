@@ -1,6 +1,5 @@
 package com.example.wishlist.Controllers;
 
-import com.example.wishlist.DTO.UserDTO;
 import com.example.wishlist.DTO.WishlistDTO;
 import com.example.wishlist.Models.User;
 import com.example.wishlist.Models.Wish;
@@ -125,14 +124,14 @@ public class WishController {
     }
 
     @PostMapping("login")
-    public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session) {
+    public String login(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session, Model model) {
         User user = repositoryDB.getUser(repositoryDB.getUserid(username));
         if (user != null && user.getPassword().equals(password)) {
             session.setAttribute("user", user);
             return "redirect:/wishlist/wishes/" + user.getId();
-        } else {
-            return "error";
         }
+        model.addAttribute("wrongCredentials", true);
+        return "login";
     }
 
 }
