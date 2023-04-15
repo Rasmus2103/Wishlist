@@ -26,7 +26,9 @@
 
     <form action="/wishlist/register" method="post" th:object="${user}">
 
-        <h4 th:if="${wrongCredentials}" class="error">username is already used</h4>
+        <div th:if="${usernameExists}">
+            <h4 style="color: red;">Username already exists. Please choose a different username</h4>
+        </div>
 
     <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Choose name</label>
@@ -34,7 +36,7 @@
     </div>
 
 <div class="mb-3">
-    <label for="exampleFormControlInput1" class="form-label">Choos Username</label>
+    <label for="exampleFormControlInput1" class="form-label">Choose Username</label>
     <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Username" th:field="*{username}">
 </div>
 

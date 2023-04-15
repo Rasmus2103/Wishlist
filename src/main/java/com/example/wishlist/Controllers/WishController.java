@@ -51,16 +51,26 @@ public class WishController {
 
     @GetMapping("wishes/{id}")
     public String getWishes(@PathVariable("id") int userid, Model model, HttpSession session) {
-        User user = repositoryDB.getUser(userid);
-        model.addAttribute("user", user);
+        if (isLogged(session)) {
+            User user = (User) session.getAttribute("user");
+            String userIdString = Integer.toString(userid);
+            if (user.getId().equals(userIdString)) {
+                model.addAttribute("user", user);
 
-        List<WishlistDTO> wishLists = repositoryDB.getWishlists(userid);
-        model.addAttribute("wishlists", wishLists);
+                List<WishlistDTO> wishLists = repositoryDB.getWishlists(userid);
+                model.addAttribute("wishlists", wishLists);
 
-        List<Wish> wishes = repositoryDB.getWishes(userid);
-        model.addAttribute("wishes", wishes);
-        return isLogged(session) ? "wishes" : "login";
+                List<Wish> wishes = repositoryDB.getWishes(userid);
+                model.addAttribute("wishes", wishes);
+                return "wishes";
+            } else {
+                return "error";
+            }
+        } else {
+            return "login";
+        }
     }
+
 
     @GetMapping("wishlist/{userid}/{wishlistid}")
     public String getWishlists(@PathVariable("userid") int userid, @PathVariable("wishlistid") int wishlistid, Model model, HttpSession session) {
@@ -84,15 +94,13 @@ public class WishController {
 
     @PostMapping("register")
     public String registerUser(@ModelAttribute("user") User user, Model model) {
-        repositoryDB.registerUser(user);
-        /*
-        if (user.getUsername() == 0) {
-
+        try {
+            repositoryDB.registerUser(user);
             return "redirect:/wishlist/login";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("usernameExists", true);
+            return "register";
         }
-        model.addAttribute("wrongCredentials", true);
-        */
-        return "redirect:/wishlist/login";
     }
 
     @GetMapping("wishes/{userid}/createwishlist")

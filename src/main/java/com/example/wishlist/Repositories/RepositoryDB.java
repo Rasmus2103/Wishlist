@@ -180,6 +180,9 @@ public class RepositoryDB implements IRepositoryDB {
 
     public void registerUser(User user) {
         try {
+            if(usernameExists(user.getUsername())) {
+                throw new IllegalArgumentException("Username already exists");
+            }
             String SQL = "INSERT INTO user (name, username, password) VALUES (?, ?, ?)";
             PreparedStatement ps = connection().prepareStatement(SQL);
             ps.setString(1, user.getName());
@@ -264,6 +267,22 @@ public class RepositoryDB implements IRepositoryDB {
            System.out.println(e.getMessage());
            throw new RuntimeException(e);
        }
+    }
+
+    public boolean usernameExists(String username) {
+        try {
+            String SQL = "SELECT COUNT(*) FROM user WHERE username = ?";
+            PreparedStatement ps = connection().prepareStatement(SQL);
+            ps.setString(1, username);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
+        return false;
     }
 
 

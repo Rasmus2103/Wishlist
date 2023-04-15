@@ -18,5 +18,5 @@ public interface IRepositoryDB {
     void deleteWishlist(int wishlistId);
     void deleteWish(int wishId);
     void addWishToWishlist(Wish wish, int wishlistid);
-
+    boolean usernameExists(String username);
 }
