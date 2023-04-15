@@ -288,5 +288,19 @@ input[type="submit"]:hover {
     background-color: #0056b3;
 }
 
+.login-form-div {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    padding-top: 30px;
+}
+
+.main-login{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
 

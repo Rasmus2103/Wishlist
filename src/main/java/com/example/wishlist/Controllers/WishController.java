@@ -83,8 +83,15 @@ public class WishController {
     }
 
     @PostMapping("register")
-    public String registerUser(@ModelAttribute("user") User user) {
+    public String registerUser(@ModelAttribute("user") User user, Model model) {
         repositoryDB.registerUser(user);
+        /*
+        if (user.getUsername() == 0) {
+
+            return "redirect:/wishlist/login";
+        }
+        model.addAttribute("wrongCredentials", true);
+        */
         return "redirect:/wishlist/login";
     }
 
