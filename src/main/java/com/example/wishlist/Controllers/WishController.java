@@ -62,6 +62,19 @@ public class WishController {
         return isLogged(session) ? "wishes" : "login";
     }
 
+    @GetMapping("wishlist/{userid}/{wishlistid}")
+    public String getWishlists(@PathVariable("userid") int userid, @PathVariable("wishlistid") int wishlistid, Model model, HttpSession session) {
+        User user = repositoryDB.getUser(userid);
+        model.addAttribute("user", user);
+
+        WishlistDTO wishLists = repositoryDB.getSpecificWishlists(wishlistid);
+        model.addAttribute("wishlists", wishLists);
+
+        List<Wish> wishes = repositoryDB.getSpecificWishes(wishlistid);
+        model.addAttribute("wishes", wishes);
+        return isLogged(session) ? "wishlist" : "login";
+    }
+
     @GetMapping("register")
     public String register(Model model) {
         User user = new User();
@@ -102,8 +115,7 @@ public class WishController {
     @PostMapping("addwish/{wishlistid}/{userid}")
     public String addWishToWishList(@ModelAttribute("wishes") Wish wishes, @PathVariable("userid") int userid) {
         repositoryDB.addWishToWishlist(wishes, wishes.getWishlistid());
-        return "redirect:/wishlist/wishes/" + userid;
-        //metode virker ikke
+        return "redirect:/wishlist/wishlist/" + userid + "/" + wishes.getWishlistid();
     }
     @GetMapping("wishes/slet/{wishlistid}/{userid}")
     public String deleteWishlist(@PathVariable("wishlistid") int wishlistId, @PathVariable("userid") int userid, Model model) {
@@ -112,12 +124,20 @@ public class WishController {
         return "redirect:/wishlist/wishes/" + userid;
     }
 
-    @GetMapping("wishes/sletwish/{wishid}/{userid}")
-    public String deleteWish(@PathVariable("wishid") int wishId , @PathVariable("userid") int userid, Model model){
+    @GetMapping("wishes/sletwish/{wishid}/{userid}/{wishlistid}")
+    public String deleteWish(@PathVariable("wishid") int wishId , @PathVariable("userid") int userid, @PathVariable("wishlistid") int wishlistid, Model model, HttpSession session){
         repositoryDB.deleteWish(wishId);
-        model.addAttribute("wishes", repositoryDB.getWishlists(wishId));
-        return "redirect:/wishlist/wishes/" + userid;
+        User user = repositoryDB.getUser(userid);
+        model.addAttribute("user", user);
+
+        List<Wish> wishes = repositoryDB.getSpecificWishes(wishlistid);
+        model.addAttribute("wishes", wishes);
+
+        WishlistDTO wishLists = repositoryDB.getSpecificWishlists(wishlistid);
+        model.addAttribute("wishlists", wishLists);
+        return isLogged(session) ? "wishlist" : "login";
     }
+
 
     @GetMapping("login")
     public String login() {

@@ -108,10 +108,29 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
+    public WishlistDTO getSpecificWishlists(int wishlistid) {
+        WishlistDTO wishlist = null;
+        try {
+            String SQL = "SELECT wishlistname, wishlistid FROM wishlist WHERE wishlistid = ?;";
+            PreparedStatement ps = connection().prepareStatement(SQL);
+            ps.setInt(1, wishlistid);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                String name = rs.getString("wishlistname");
+                wishlistid = rs.getInt("wishlistid");
+                wishlist = new WishlistDTO(name, wishlistid);
+            }
+            return wishlist;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<Wish> getWishes(int userId) {
         List<Wish> wishes = new ArrayList<>();
         try {
-            String SQL = "SELECT wishid, wishname, description, url, price FROM Wish\n" +
+            String SQL = "SELECT wishid, wishname, description, url, price, wish.wishlistid  FROM Wish\n" +
                     "JOIN Wishlist ON Wish.wishlistid = Wishlist.wishlistid\n" +
                     "WHERE Wishlist.userid = ?;";
             PreparedStatement ps = connection().prepareStatement(SQL);
@@ -123,7 +142,34 @@ public class RepositoryDB implements IRepositoryDB {
                 String desription = rs.getString("description");
                 String url = rs.getString("url");
                 String price = rs.getString("price");
-                wishes.add(new Wish(wishid ,wish, desription, url, price, userId));
+                int wishlistid = rs.getInt("wishlistid");
+
+                wishes.add(new Wish(wishid ,wish, desription, url, price, userId, wishlistid));
+            }
+            return wishes;
+        } catch (SQLException e){
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
+    }
+
+    public List<Wish> getSpecificWishes(int wishlistid) {
+        List<Wish> wishes = new ArrayList<>();
+        try {
+            String SQL = "SELECT wishid, wishname, description, url, price FROM Wish\n" +
+                    "JOIN Wishlist ON Wish.wishlistid = Wishlist.wishlistid\n" +
+                    "WHERE Wishlist.wishlistid = ?;";
+            PreparedStatement ps = connection().prepareStatement(SQL);
+            ps.setInt(1, wishlistid);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                int wishid = rs.getInt("wishid");
+                String wish = rs.getString("wishname");
+                String desription = rs.getString("description");
+                String url = rs.getString("url");
+                String price = rs.getString("price");
+
+                wishes.add(new Wish(wishid ,wish, desription, url, price, wishlistid));
             }
             return wishes;
         } catch (SQLException e){

@@ -34,13 +34,23 @@ public class Wish {
         this.userid = userid;
     }
 
-    public Wish(int wishId, String name, String description, String url, String price, int userid) {
+    public Wish(int wishId, String name, String description, String url, String price, int userid, int wishlistid) {
         this.wishId = wishId;
         this.name = name;
         this.description = description;
         this.url = url;
         this.price = price;
         this.userid = userid;
+        this.wishlistid = wishlistid;
+    }
+
+    public Wish(int wishId, String name, String description, String url, String price, int wishlistid) {
+        this.wishId = wishId;
+        this.name = name;
+        this.description = description;
+        this.url = url;
+        this.price = price;
+        this.wishlistid = wishlistid;
     }
 
 
