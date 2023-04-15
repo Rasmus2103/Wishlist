@@ -12,9 +12,6 @@
     <div class="container">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
             <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                <a href="/">
-                    <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-                </a>
                 <a class="index_hyperlink" th:href="@{/wishlist}">
                     <h1 class="fs-4"> Wishlist </h1>
                 </a>
@@ -23,15 +20,17 @@
     </div>
 
     <h1>Login</h1>
+    <br>
 
     <form action="#" th:action="@{/wishlist/login}" method="post">
-        <p th:if="${wrongCredentials}" class="error">Forkert username eller password</p>
+        <h4 th:if="${wrongCredentials}" class="error">Forkert username eller password</h4>
         <label for="username">Username:</label>
             <input type="text" id="username" name="username" th:name="username"><br> <!-- Use Thymeleaf to set the name attribute -->
         <label for="password">Password:</label>
             <input type="password" id="password" name="password" th:name="password"><br> <!-- Use Thymeleaf to set the name attribute -->
             <input type="submit" value="Login">
     </form>
+    <br>
     <a th:href="register"> if you don't already have a user, click here</a>
 </div>
 </body>

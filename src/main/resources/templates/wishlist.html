@@ -14,12 +14,8 @@
     <div class="container">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
             <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                <a href="/">
-                    <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-                </a>
                 <h1 class="fs-4"> Wishlist </h1>
             </div>
-
             <ul class="nav nav-pills">
                 <li class="nav-item">  <a th:href="@{/wishlist/logout}" class="nav-link">Logout</a></li>
             </ul>
@@ -28,13 +24,16 @@
 
     <a th:href="@{'/wishlist/wishes/' + ${user.getId()}}"> back to  main page</a>
     <br>
+    <br>
 
     <div th:each="wishlists: ${wishlists}">
  <h1 th:if="${wishlists != null}" th:text="${wishlists.getName()}"></h1>
  <a th:href="@{'/wishlist/addwish/' + ${wishlists.getWishlistid()} + '/' + ${user.getId()}}">add wish </a>
+        <br>
     </div>
 
  <table>
+     <br>
      <div th:if="${wishes.isEmpty()}">
          <h6>no wishes yet... feel free to add one</h6>
      </div>
