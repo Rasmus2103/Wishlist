@@ -64,7 +64,7 @@ public class WishController {
                 model.addAttribute("wishes", wishes);
                 return "wishes";
             } else {
-                return "error";
+                return "redirect:/wishlist";
             }
         } else {
             return "login";

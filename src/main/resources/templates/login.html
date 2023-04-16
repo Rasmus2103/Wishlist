@@ -26,7 +26,7 @@
      <form action="#" th:action="@{/wishlist/login}" method="post">
 
 
-        <h4 th:if="${wrongCredentials}" class="error">Forkert username eller password</h4>
+        <h4 th:if="${wrongCredentials}" class="error">Wrong username or password</h4>
         <label for="username">Username:</label>
             <input type="text" id="username" name="username" th:name="username"><br>
         <label for="password">Password:</label>
