@@ -22,13 +22,14 @@
         </header>
     </div>
 
-    <a th:href="@{'/wishlist/wishes/' + ${user.getId()}}"> back to  main page</a>
+    <div id="container">
+    <a th:href="@{'/wishlist/wishes/' + ${user.getId()}}">All wishlist</a>
     <br>
     <br>
 
     <div th:each="wishlists: ${wishlists}">
  <h1 th:if="${wishlists != null}" th:text="${wishlists.getName()}"></h1>
- <a th:href="@{'/wishlist/addwish/' + ${wishlists.getWishlistid()} + '/' + ${user.getId()}}">add wish </a>
+ <a th:href="@{'/wishlist/addwish/' + ${wishlists.getWishlistid()} + '/' + ${user.getId()}}">New wish </a>
         <br>
     </div>
 
@@ -47,6 +48,7 @@
      </td>
     </div>
  </table>
+    </div>
 
 </div>
 
