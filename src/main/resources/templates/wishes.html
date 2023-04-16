@@ -27,8 +27,8 @@
 
 
     <div class="wishes-top">
-    <h1  th:if="${user != null}" th:text="${user.getName()} + '\'s ' + 'wishslits' "></h1>
-    <a  th:href="@{/wishlist/wishes/{userid}/createwishlist(userid=${user.id})}">New wishlist </a>
+    <h1 id="welcome-name" th:if="${user != null}" th:text="${user.getName()} + '\'s ' + 'wishlists' "></h1>
+    <a id="new-wishlist-button" th:href="@{/wishlist/wishes/{userid}/createwishlist(userid=${user.id})}">New wishlist </a>
     </div>
 
     <br>
@@ -42,7 +42,7 @@
             <h6>no wishlist yet... feel free to add one</h6>
         </div>
 
-        <tr th:each="wishlist: ${wishlists}">
+        <tr id="showcase" th:each="wishlist: ${wishlists}">
 
             <td>
                 <h3 th:text="${wishlist.name}"></h3>

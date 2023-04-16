@@ -295,10 +295,55 @@ input[type="submit"]:hover {
     padding-top: 30px;
 }
 
-.main-login{
+.main-login {
     display: flex;
     text-align: center;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.wishes-top {
+    width: 100%;
+    display: flex;
+}
+
+#new-wishlist-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: 10px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.welcome-name {
+    width: 20%;
+}
+
+#new-wishlist-button:hover {
+        background-color: #0056b3;
+    }
+
+#showcase {
+    background-color: #8acbf5;
+    color: #fff;
+    padding: 50px;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    margin: 10px;
+    text-align: center;
+}
+
+#showcase:hover {
+    background-color: #70a4e0;
+}
+
+#showcase a {
+    color: #fff;
+    font-weight: bold;
 }
