@@ -59,9 +59,6 @@ public class WishController {
 
                 List<WishlistDTO> wishLists = repositoryDB.getWishlists(userid);
                 model.addAttribute("wishlists", wishLists);
-
-                List<Wish> wishes = repositoryDB.getWishes(userid);
-                model.addAttribute("wishes", wishes);
                 return "wishes";
             } else {
                 return "redirect:/wishlist";
@@ -107,10 +104,6 @@ public class WishController {
     public String addWishList(@PathVariable("userid") int userid, Model model) {
         WishlistDTO wishlistDTO = new WishlistDTO(userid);
         model.addAttribute("wishlistDTO", wishlistDTO);
-
-        List<Wish> wishes = repositoryDB.getWishes(userid);
-        model.addAttribute("wishes", wishes);
-
         return "registerwishlist";
     }
 
@@ -129,7 +122,7 @@ public class WishController {
 
     @PostMapping("addwish/{wishlistid}/{userid}")
     public String addWishToWishList(@ModelAttribute("wishes") Wish wishes, @PathVariable("userid") int userid) {
-        repositoryDB.addWishToWishlist(wishes, wishes.getWishlistid());
+        repositoryDB.addWish(wishes, wishes.getWishlistid());
         return "redirect:/wishlist/wishlist/" + userid + "/" + wishes.getWishlistid();
     }
     @GetMapping("wishes/slet/{wishlistid}/{userid}")

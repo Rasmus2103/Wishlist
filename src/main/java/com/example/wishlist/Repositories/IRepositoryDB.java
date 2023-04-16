@@ -10,13 +10,12 @@ public interface IRepositoryDB {
     int getUserid(String username);
     List<User> getUsers();
     List<WishlistDTO> getWishlists(int userId);
-    public WishlistDTO getSpecificWishlists(int wishlistid);
+    WishlistDTO getSpecificWishlists(int wishlistid);
     void registerUser(User user);
     void addWishlist(int userID, String wishlistName);
-    List<Wish> getWishes(int userId);
     List<Wish> getSpecificWishes(int wishlistid);
     void deleteWishlist(int wishlistId);
     void deleteWish(int wishId);
-    void addWishToWishlist(Wish wish, int wishlistid);
+    void addWish(Wish wish, int wishlistid);
     boolean usernameExists(String username);
 }

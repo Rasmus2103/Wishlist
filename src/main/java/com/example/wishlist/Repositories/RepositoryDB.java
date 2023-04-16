@@ -127,32 +127,6 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
-    public List<Wish> getWishes(int userId) {
-        List<Wish> wishes = new ArrayList<>();
-        try {
-            String SQL = "SELECT wishid, wishname, description, url, price, wish.wishlistid  FROM Wish\n" +
-                    "JOIN Wishlist ON Wish.wishlistid = Wishlist.wishlistid\n" +
-                    "WHERE Wishlist.userid = ?;";
-            PreparedStatement ps = connection().prepareStatement(SQL);
-            ps.setInt(1, userId);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
-                int wishid = rs.getInt("wishid");
-                String wish = rs.getString("wishname");
-                String desription = rs.getString("description");
-                String url = rs.getString("url");
-                String price = rs.getString("price");
-                int wishlistid = rs.getInt("wishlistid");
-
-                wishes.add(new Wish(wishid ,wish, desription, url, price, userId, wishlistid));
-            }
-            return wishes;
-        } catch (SQLException e){
-            System.out.println(e.getMessage());
-            throw new RuntimeException();
-        }
-    }
-
     public List<Wish> getSpecificWishes(int wishlistid) {
         List<Wish> wishes = new ArrayList<>();
         try {
@@ -195,7 +169,7 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
-    public void addWishToWishlist(Wish wish, int wishlistid) {
+    public void addWish(Wish wish, int wishlistid) {
         try {
             String SQL = "INSERT INTO wish (wishname, description, url, price, wishlistid) VALUES (?, ?, ?, ?,?)";
             PreparedStatement ps = connection().prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);

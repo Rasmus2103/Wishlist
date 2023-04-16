@@ -10,38 +10,9 @@ public class Wish {
     private int wishlistid;
     private int userid;
 
-    public Wish(String name, String description, String url, String price) {
-        this.name = name;
-        this.description = description;
-        this.url = url;
-        this.price = price;
-    }
-
-    public Wish(int wishId, String name, String description, String url, String price) {
-        this.wishId = wishId;
-        this.name = name;
-        this.description = description;
-        this.url = url;
-        this.price = price;
-    }
-
-    public Wish(int wishlistid) {
-        this.wishlistid = wishlistid;
-    }
-
     public Wish(int wishlistid, int userid) {
         this.wishlistid = wishlistid;
         this.userid = userid;
-    }
-
-    public Wish(int wishId, String name, String description, String url, String price, int userid, int wishlistid) {
-        this.wishId = wishId;
-        this.name = name;
-        this.description = description;
-        this.url = url;
-        this.price = price;
-        this.userid = userid;
-        this.wishlistid = wishlistid;
     }
 
     public Wish(int wishId, String name, String description, String url, String price, int wishlistid) {
