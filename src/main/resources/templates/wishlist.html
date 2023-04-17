@@ -44,7 +44,7 @@
     <td th:text="${wishes.url}"></td>
     <td th:text="${wishes.price}"></td>
      <td>
-    <a th:href="@{'/wishlist/wishes/sletwish/' + ${wishes.wishId} + '/' + ${user.getId()} + '/' + ${wishes.wishlistid}}" onclick="return confirm('Er du sikker?')">delete wish </a>
+    <a th:href="@{'/wishlist/wishes/sletwish/' + ${wishes.wishId} + '/' + ${user.getId()} + '/' + ${wishes.wishlistid}}">delete wish </a>
      </td>
     </div>
  </table>

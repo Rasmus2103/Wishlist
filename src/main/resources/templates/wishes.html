@@ -47,7 +47,7 @@
             <td>
                 <h3 th:text="${wishlist.name}"></h3>
                 <a th:href="@{'/wishlist/wishlist/' + ${user.getId()} + '/' + ${wishlist.getWishlistid()}}">go to wishlist </a> <br>
-                <a th:href="@{'/wishlist/wishes/slet/' + ${wishlist.getWishlistid()} + '/' + ${user.getId()}  }" onclick="return confirm('Er du sikker?')">delete wishlist </a>
+                <a th:href="@{'/wishlist/wishes/slet/' + ${wishlist.getWishlistid()} + '/' + ${user.getId()}  }">delete wishlist </a>
             </td>
 
         </tr>
