@@ -25,5 +25,5 @@ CMD set -eux; \
 # docker build  -f Dockerfile.java -t java-app .
 
 # Run like this:
-# docker network create superhero || true
-# docker run -it --rm --name java-app -p 8080:8080 --network superhero java-app
+# docker network create wishlist || true
+# docker run -it --rm --name java-app -p 8080:8080 --network wishlist java-app
