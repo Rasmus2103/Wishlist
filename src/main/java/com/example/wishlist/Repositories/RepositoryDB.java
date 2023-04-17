@@ -108,14 +108,33 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
-    public List<Wish> getWishes(int userId) {
+    public WishlistDTO getSpecificWishlists(int wishlistid) {
+        WishlistDTO wishlist = null;
+        try {
+            String SQL = "SELECT wishlistname, wishlistid FROM wishlist WHERE wishlistid = ?;";
+            PreparedStatement ps = connection().prepareStatement(SQL);
+            ps.setInt(1, wishlistid);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                String name = rs.getString("wishlistname");
+                wishlistid = rs.getInt("wishlistid");
+                wishlist = new WishlistDTO(name, wishlistid);
+            }
+            return wishlist;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Wish> getSpecificWishes(int wishlistid) {
         List<Wish> wishes = new ArrayList<>();
         try {
             String SQL = "SELECT wishid, wishname, description, url, price FROM Wish\n" +
                     "JOIN Wishlist ON Wish.wishlistid = Wishlist.wishlistid\n" +
-                    "WHERE Wishlist.userid = ?;";
+                    "WHERE Wishlist.wishlistid = ?;";
             PreparedStatement ps = connection().prepareStatement(SQL);
-            ps.setInt(1, userId);
+            ps.setInt(1, wishlistid);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 int wishid = rs.getInt("wishid");
@@ -123,7 +142,8 @@ public class RepositoryDB implements IRepositoryDB {
                 String desription = rs.getString("description");
                 String url = rs.getString("url");
                 String price = rs.getString("price");
-                wishes.add(new Wish(wishid ,wish, desription, url, price));
+
+                wishes.add(new Wish(wishid ,wish, desription, url, price, wishlistid));
             }
             return wishes;
         } catch (SQLException e){
@@ -134,6 +154,9 @@ public class RepositoryDB implements IRepositoryDB {
 
     public void registerUser(User user) {
         try {
+            if(usernameExists(user.getUsername())) {
+                throw new IllegalArgumentException("Username already exists");
+            }
             String SQL = "INSERT INTO user (name, username, password) VALUES (?, ?, ?)";
             PreparedStatement ps = connection().prepareStatement(SQL);
             ps.setString(1, user.getName());
@@ -146,7 +169,7 @@ public class RepositoryDB implements IRepositoryDB {
         }
     }
 
-    public void addWishToWishlist(Wish wish, int wishlistid) {
+    public void addWish(Wish wish, int wishlistid) {
         try {
             String SQL = "INSERT INTO wish (wishname, description, url, price, wishlistid) VALUES (?, ?, ?, ?,?)";
             PreparedStatement ps = connection().prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
@@ -218,6 +241,22 @@ public class RepositoryDB implements IRepositoryDB {
            System.out.println(e.getMessage());
            throw new RuntimeException(e);
        }
+    }
+
+    public boolean usernameExists(String username) {
+        try {
+            String SQL = "SELECT COUNT(*) FROM user WHERE username = ?";
+            PreparedStatement ps = connection().prepareStatement(SQL);
+            ps.setString(1, username);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
+        return false;
     }
 
 

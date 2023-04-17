@@ -51,15 +51,35 @@ public class WishController {
 
     @GetMapping("wishes/{id}")
     public String getWishes(@PathVariable("id") int userid, Model model, HttpSession session) {
+        if (isLogged(session)) {
+            User user = (User) session.getAttribute("user");
+            String userIdString = Integer.toString(userid);
+            if (user.getId().equals(userIdString)) {
+                model.addAttribute("user", user);
+
+                List<WishlistDTO> wishLists = repositoryDB.getWishlists(userid);
+                model.addAttribute("wishlists", wishLists);
+                return "wishes";
+            } else {
+                return "redirect:/wishlist";
+            }
+        } else {
+            return "login";
+        }
+    }
+
+
+    @GetMapping("wishlist/{userid}/{wishlistid}")
+    public String getWishlists(@PathVariable("userid") int userid, @PathVariable("wishlistid") int wishlistid, Model model, HttpSession session) {
         User user = repositoryDB.getUser(userid);
         model.addAttribute("user", user);
 
-        List<WishlistDTO> wishLists = repositoryDB.getWishlists(userid);
+        WishlistDTO wishLists = repositoryDB.getSpecificWishlists(wishlistid);
         model.addAttribute("wishlists", wishLists);
 
-        List<Wish> wishes = repositoryDB.getWishes(userid);
+        List<Wish> wishes = repositoryDB.getSpecificWishes(wishlistid);
         model.addAttribute("wishes", wishes);
-        return isLogged(session) ? "wishes" : "login";
+        return isLogged(session) ? "wishlist" : "login";
     }
 
     @GetMapping("register")
@@ -70,53 +90,62 @@ public class WishController {
     }
 
     @PostMapping("register")
-    public String registerUser(@ModelAttribute("user") User user) {
-        repositoryDB.registerUser(user);
-        return "redirect:/wishlist";
+    public String registerUser(@ModelAttribute("user") User user, Model model) {
+        try {
+            repositoryDB.registerUser(user);
+            return "redirect:/wishlist/login";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("usernameExists", true);
+            return "register";
+        }
     }
 
     @GetMapping("wishes/{userid}/createwishlist")
     public String addWishList(@PathVariable("userid") int userid, Model model) {
         WishlistDTO wishlistDTO = new WishlistDTO(userid);
         model.addAttribute("wishlistDTO", wishlistDTO);
-
-        List<Wish> wishes = repositoryDB.getWishes(userid);
-        model.addAttribute("wishes", wishes);
-
         return "registerwishlist";
     }
 
     @PostMapping("wishes/{userid}/createwishlist")
     public String addWishList(@ModelAttribute("wishlistDTO") WishlistDTO wishlistDTO, String name) {
         repositoryDB.addWishlist(wishlistDTO.getUserid(), name);
-        return "redirect:/wishlist";
+        return "redirect:/wishlist/wishes/" + wishlistDTO.getUserid();
     }
 
-    @GetMapping("addwish/{wishlistid}")
-    public String addWishToWishList(@PathVariable("wishlistid") int wishlistid, Model model) {
-        Wish wish = new Wish(wishlistid);
+    @GetMapping("addwish/{wishlistid}/{userid}")
+    public String addWishToWishList(@PathVariable("wishlistid") int wishlistid,@PathVariable("userid") int userid, Model model) {
+        Wish wish = new Wish(wishlistid, userid);
         model.addAttribute("wishes", wish);
         return "registerwish";
     }
 
-    @PostMapping("addwish/{wishlistid}")
-    public String addWishToWishList(@ModelAttribute("wishes") Wish wish) {
-        repositoryDB.addWishToWishlist(wish, wish.getWishlistid());
-        return "redirect:/wishlist";
+    @PostMapping("addwish/{wishlistid}/{userid}")
+    public String addWishToWishList(@ModelAttribute("wishes") Wish wishes, @PathVariable("userid") int userid) {
+        repositoryDB.addWish(wishes, wishes.getWishlistid());
+        return "redirect:/wishlist/wishlist/" + userid + "/" + wishes.getWishlistid();
     }
-    @GetMapping("wishes/slet/{wishlistid}")
-    public String deleteWishlist(@PathVariable("wishlistid") int wishlistId, Model model) {
+    @GetMapping("wishes/slet/{wishlistid}/{userid}")
+    public String deleteWishlist(@PathVariable("wishlistid") int wishlistId, @PathVariable("userid") int userid, Model model) {
         repositoryDB.deleteWishlist(wishlistId);
         model.addAttribute("wishlist", repositoryDB.getWishlists(wishlistId));
-        return "redirect:/wishlist";
+        return "redirect:/wishlist/wishes/" + userid;
     }
 
-    @GetMapping("wishes/sletwish/{wishid}")
-    public String deleteWish(@PathVariable("wishid") int wishId, Model model){
+    @GetMapping("wishes/sletwish/{wishid}/{userid}/{wishlistid}")
+    public String deleteWish(@PathVariable("wishid") int wishId , @PathVariable("userid") int userid, @PathVariable("wishlistid") int wishlistid, Model model, HttpSession session){
         repositoryDB.deleteWish(wishId);
-        model.addAttribute("wishes", repositoryDB.getWishlists(wishId));
-        return "redirect:/wishlist";
+        User user = repositoryDB.getUser(userid);
+        model.addAttribute("user", user);
+
+        List<Wish> wishes = repositoryDB.getSpecificWishes(wishlistid);
+        model.addAttribute("wishes", wishes);
+
+        WishlistDTO wishLists = repositoryDB.getSpecificWishlists(wishlistid);
+        model.addAttribute("wishlists", wishLists);
+        return isLogged(session) ? "wishlist" : "login";
     }
+
 
     @GetMapping("login")
     public String login() {
@@ -142,3 +171,6 @@ public class WishController {
     }
 
 }
+
+
+

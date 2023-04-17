@@ -3,12 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>register wishlist</title>
+    <link th:href="@{/styles.css}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
 </head>
 <body>
 
+<div class="main">
+
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <h1 class="fs-4"> Wishlist </h1>
+            </div>
+
+            <ul class="nav nav-pills">
+                <li class="nav-item">  <a th:href="@{/wishlist/logout}" class="nav-link">Logout</a></li>
+            </ul>
+        </header>
+    </div>
+
 <div id="container">
-    <h1>add wishlist</h1>
-    <form> <input type="button" value="back" onclick="history.back()"> </form>
+    <h1>add a name to your new wishlist</h1>
     <!--<a href="/wishlist/wishes/">back</a>-->
 
     <form action="#" th:action="@{/wishlist/wishes/{userid}/createwishlist(userid=${userid})}" method="post" th:object="${wishlistDTO}">
@@ -17,10 +33,6 @@
             <label  class="form-label">name</label>
             <input type="text" class="form-control" placeholder="name" th:field="*{name}">
 
-            <label class="form-label">Wishes</label>
-          <!--  <div th:each="wishes: ${wishes}">
-                <input type="checkbox" th:field="*{wishes}" th:value="wishes" th:text="${wishes}">
-            </div> -->
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>

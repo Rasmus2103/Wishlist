@@ -15,17 +15,6 @@ public class WishlistDTO {
         this.wishlistid = wishlistid;
     }
 
-    public WishlistDTO(String name, List<Wish> wishes) {
-        this.name = name;
-        this.wishes = wishes;
-    }
-
-    public WishlistDTO(String name, int wishlistid, List<Wish> wishes){
-        this.name = name;
-        this.wishlistid = wishlistid;
-        this.wishes = wishes;
-    }
-
     public WishlistDTO(int userid) {
         this.userid = userid;
     }

@@ -1,4 +1,3 @@
-
 // JavaScript for slider functionality
 const sliderWrapper = document.querySelector('.slider-wrapper');
 const prevBtn = document.querySelector('.prev');

@@ -8,30 +8,40 @@
 </head>
 <body>
 
-<div id="container">
-    <h1>add wish</h1>
-    <form> <input type="button" value="back" onclick="history.back()"> </form>
+<div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <h1 class="fs-4"> Wishlist </h1>
+        </div>
 
-    <form action="#" th:action="@{/wishlist/addwish/{wishlistid}(wishlistid=${wishlistid})}" method="post" th:object="${wishes}">
+        <ul class="nav nav-pills">
+            <li class="nav-item">  <a th:href="@{/wishlist/logout}" class="nav-link">Logout</a></li>
+        </ul>
+    </header>
+</div>
+
+<div id="container">
+    <h1>add a wish</h1>
+
+    <form th:action="@{'/wishlist/addwish/' + ${wishlistid} + '/' + ${wishes.getUserid()}}" method="post" th:object="${wishes}">
 
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Name</label>
-            <input type="text" class="form-control" placeholder="name" th:field="*{name}">
+            <input type="text" class="form-control" th:field="*{name}">
         </div>
-
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Description</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Username" th:field="*{description}">
+            <input type="text" class="form-control" id="exampleFormControlInput1" th:field="*{description}">
         </div>
 
         <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Link Adresse</label>
-            <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="Username" th:field="*{url}">
+            <label for="exampleFormControlInput1" class="form-label">Link </label>
+            <input type="text" class="form-control" id="exampleFormControlInput2" th:field="*{url}">
         </div>
 
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Price</label>
-            <input type="text" class="form-control" id="exampleFormControlInput3" placeholder="Username" th:field="*{price}">
+            <input type="text" class="form-control" id="exampleFormControlInput3" th:field="*{price}">
         </div>
 
 
