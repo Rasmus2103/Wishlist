@@ -130,9 +130,9 @@ public class RepositoryDB implements IRepositoryDB {
     public List<Wish> getSpecificWishes(int wishlistid) {
         List<Wish> wishes = new ArrayList<>();
         try {
-            String SQL = "SELECT wishid, wishname, description, url, price FROM Wish\n" +
-                    "JOIN Wishlist ON Wish.wishlistid = Wishlist.wishlistid\n" +
-                    "WHERE Wishlist.wishlistid = ?;";
+            String SQL = "SELECT wishid, wishname, description, url, price FROM wish\n" +
+                    "JOIN wishlist ON wish.wishlistid = wishlist.wishlistid\n" +
+                    "WHERE wishlist.wishlistid = ?;";
             PreparedStatement ps = connection().prepareStatement(SQL);
             ps.setInt(1, wishlistid);
             ResultSet rs = ps.executeQuery();
