@@ -24,7 +24,9 @@ COPY src/mysql/init/* /docker-entrypoint-initdb.d/
 
 EXPOSE $PORT $MYSQL_PORT
 
-CMD ["java", "-jar", "/app/*.jar"]
+CMD set -eux; \
+    lamj.init.sh; \
+    java -jar /app/*.jar;
 
 # Build like this:
 # docker build  -t wishlist .
