@@ -1,0 +1,11 @@
+FROM mysql:8.0
+
+ENV MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
+
+COPY src/mysql/init/* /docker-entrypoint-initdb.d/
+EXPOSE 3306
+# Build like this:
+# docker build  -f Dockerfile.mysql -t mysql-server .
+# Run like this:
+# docker network create superhero || true
+# docker run -it --rm --name mysql-server -p 3306:3306 --network superhero -e MYSQL_ROOT_PASSWORD=root mysql-server
