@@ -1,6 +1,6 @@
 [client]
   user=root
   password=root
-  database=superhero
+  database=wishlist
   host=127.0.0.1
   port=3306
