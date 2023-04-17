@@ -187,7 +187,7 @@ public class RepositoryDB implements IRepositoryDB {
 
     public void addWishlist(int userid, String wishlistName){
         try{
-            String SQL = "INSERT INTO wishlist (wishlistName, userid) VALUES (?,?)";
+            String SQL = "INSERT INTO wishlist (wishlistname, userid) VALUES (?,?)";
             PreparedStatement ps = connection().prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, wishlistName);
             ps.setInt(2, userid);
