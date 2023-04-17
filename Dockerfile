@@ -1,6 +1,7 @@
 FROM lakruzz/lamj:latest
 
-# ENV MYSQL_ROOT_PASSWORD=root
+# Install Maven and Java
+RUN apt-get update && apt-get install -y maven openjdk-11-jre
 
 ENV PORT=8080
 ENV MYSQL_PORT=3306
@@ -9,6 +10,7 @@ COPY src /src
 COPY pom.xml /pom.xml
 COPY mvnw /mvnw
 COPY .mvn /.mvn
+
 RUN set -ex; \
      mvn -f /pom.xml clean package; \
      mv /target/*.jar /app/; \
