@@ -28,11 +28,27 @@
 
     <div class="wishes-top">
     <h1 id="welcome-name" th:if="${user != null}" th:text="${user.getName()} + '\'s ' + 'wishlists' "></h1>
-    <a id="new-wishlist-button" th:href="@{/wishlist/wishes/{userid}/createwishlist(userid=${user.id})}">New wishlist </a>
+    <a class="new-wishlist-button" th:href="@{/wishlist/wishes/{userid}/createwishlist(userid=${user.id})}">New wishlist </a>
     </div>
 
     <br>
     <br>
+
+    <div class="wishes-display">
+        <table id="showcase-table">
+            <tbody>
+                 <tr id="showcase" th:each="wishlist: ${wishlists}">
+
+                     <td>
+                         <h3 th:text="${wishlist.name}"></h3>
+                         <a th:href="@{'/wishlist/wishlist/' + ${user.getId()} + '/' + ${wishlist.getWishlistid()}}">go to wishlist </a> <br>
+                         <a th:href="@{'/wishlist/wishes/slet/' + ${wishlist.getWishlistid()} + '/' + ${user.getId()}  }">delete wishlist </a>
+                     </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <div class="wishes-bottom">
     <table>
@@ -41,16 +57,6 @@
         <div th:if="${wishlists.isEmpty()}">
             <h6>no wishlist yet... feel free to add one</h6>
         </div>
-
-        <tr id="showcase" th:each="wishlist: ${wishlists}">
-
-            <td>
-                <h3 th:text="${wishlist.name}"></h3>
-                <a th:href="@{'/wishlist/wishlist/' + ${user.getId()} + '/' + ${wishlist.getWishlistid()}}">go to wishlist </a> <br>
-                <a th:href="@{'/wishlist/wishes/slet/' + ${wishlist.getWishlistid()} + '/' + ${user.getId()}  }">delete wishlist </a>
-            </td>
-
-        </tr>
 
         </tbody>
 
