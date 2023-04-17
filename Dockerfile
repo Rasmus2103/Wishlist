@@ -7,12 +7,17 @@ ENV MYSQL_PORT=3306
 
 COPY src /src
 COPY pom.xml /pom.xml
+COPY mvnw /mvnw
+COPY .mvn /.mvn
 RUN set -ex; \
-     mvn -f /pom.xml clean package; \
+     ./mvnw -f /pom.xml clean package; \
+     mkdir /app || true; \
      mv /target/*.jar /app/; \
      rm -rf /target; \
      rm -rf /src; \
-     rm -rf /pom.xml;
+     rm -rf /pom.xml; \
+     rm -rf /mvnw; \
+     rm -rf /.mvn;
 
 COPY src/mysql/init/* /docker-entrypoint-initdb.d/
 
