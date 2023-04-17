@@ -1,8 +1,8 @@
-drop database if exists Wishlist;
-CREATE DATABASE Wishlist DEFAULT CHARACTER SET utf8;
-USE Wishlist;
+drop database if exists wishlist;
+CREATE DATABASE wishlist DEFAULT CHARACTER SET utf8;
+USE wishlist;
 
-CREATE TABLE User (
+CREATE TABLE user (
 userid int auto_increment,
 name varchar(30),
 username varchar(30) unique,
@@ -10,7 +10,7 @@ password varchar(30),
 primary key (userid)
 );
 
-CREATE TABLE Wishlist (
+CREATE TABLE wishlist (
 wishlistid int auto_increment,
 wishlistname varchar(30),
 userid int not null,
@@ -18,7 +18,7 @@ primary key (wishlistid),
 foreign key (userid) references user(userid)
 );
 
-CREATE TABLE Wish (
+CREATE TABLE wish (
 wishid int auto_increment,
 wishname varchar(30),
 description varchar(255),
