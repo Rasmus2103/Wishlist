@@ -10,8 +10,7 @@ COPY pom.xml /pom.xml
 COPY mvnw /mvnw
 COPY .mvn /.mvn
 RUN set -ex; \
-     ./mvnw -f /pom.xml clean package; \
-     mkdir /app || true; \
+     mvn -f /pom.xml clean package; \
      mv /target/*.jar /app/; \
      rm -rf /target; \
      rm -rf /src; \
